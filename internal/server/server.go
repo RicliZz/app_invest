@@ -3,6 +3,8 @@ package server
 import (
 	"context"
 	"github.com/RicliZz/app_invest/config"
+	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 )
 
@@ -10,19 +12,23 @@ type APIServer struct {
 	httpServer *http.Server
 }
 
-func NewServer(cfg config.Config, handler http.Handler) *APIServer {
+func NewAPIServer(cfg config.Config, router *gin.Engine) *APIServer {
 	return &APIServer{
 		httpServer: &http.Server{
 			Addr:    ":" + cfg.Addr,
-			Handler: handler,
+			Handler: router,
 		},
 	}
 }
 
-func (s *APIServer) Start() error {
-	return s.httpServer.ListenAndServe()
+func (s *APIServer) Start() {
+	if err := s.httpServer.ListenAndServe(); err != nil {
+		log.Fatal("Server not started")
+	}
 }
 
-func (s *APIServer) Stop() error {
-	return s.httpServer.Shutdown(context.Background())
+func (s *APIServer) Shutdown() {
+	if err := s.httpServer.Shutdown(context.Background()); err != nil {
+		log.Fatal("Server not shutdown")
+	}
 }

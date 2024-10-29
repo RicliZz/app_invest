@@ -1,17 +1,29 @@
 package app
 
 import (
+	"database/sql"
 	"github.com/RicliZz/app_invest/config"
-	"github.com/RicliZz/app_invest/internal/handler"
+	authHandler "github.com/RicliZz/app_invest/internal/handlers"
+	"github.com/RicliZz/app_invest/internal/repository/AuthRepository"
 	"github.com/RicliZz/app_invest/internal/server"
+	"github.com/RicliZz/app_invest/internal/services/AuthService"
+	"github.com/gin-gonic/gin"
 	"log"
 )
 
 func Run(configpath string) {
+	router := gin.Default()
+
+	var db *sql.DB
+
+	authRepo := authRepository.NewAuthRepository(db)
+	authServ := authService.NewAuthService(authRepo)
+	authHand := authHandler.NewAuthHandler(authServ)
+
+	authHand.RegisterRoutes(router)
+
 	cfg := config.InitConfig(configpath)
-	handlers := handler.NewHandler()
-	srv := server.NewServer(cfg, handlers.InitRoutes())
-	if err := srv.Start(); err != nil {
-		log.Fatal(err)
-	}
+	srv := server.NewAPIServer(cfg, router)
+	log.Println("Server success running")
+	srv.Start()
 }

@@ -6,22 +6,22 @@ import (
 )
 
 type Config struct {
-	Addr string `yaml:"addr" env-default:":8080"`
-	DB   Dbconfig
+	Addr string `yaml:"addr" env-required:"true"`
+	Db   Db
 }
 
-type Dbconfig struct {
-	Name     string `yaml:"name" env-required:"true"`
-	Host     string `yaml:"host" env-default:"localhost"`
+type Db struct {
+	Host     string `yaml:"host" env-required:"true"`
 	Port     string `yaml:"port" env-required:"true"`
-	Username string `yaml:"username" env-default:"postgres"`
+	Username string `yaml:"username" env-required:"true"`
+	Name     string `yaml:"name" env-required:"true"`
 }
 
 var cfg Config
 
 func InitConfig(configpath string) Config {
 	if err := cleanenv.ReadConfig(configpath, &cfg); err != nil {
-		log.Fatal(err)
+		log.Fatal("config_read_err")
 	}
 	return cfg
 }
