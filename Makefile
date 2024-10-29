@@ -5,7 +5,7 @@ run:build
 	@./bin/invest_app
 
 new_migrate:
-	@migrate create -ext sql -dir db/migrations -seq $(filter-out $@, $(MAKECMDGOALS))
+	@migrate create -ext sql -dir db/migrations -seq ${name}
 
 migrate-up:
 	@migrate -database "postgres://postgres:2281337eshkere@localhost:5432/invest_db?sslmode=disable" -path db/migrations up

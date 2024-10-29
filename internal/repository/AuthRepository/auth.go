@@ -1,17 +1,32 @@
 package authRepository
 
 import (
-	"database/sql"
+	"github.com/RicliZz/app_invest/internal/models/authModel"
+	"github.com/RicliZz/app_invest/internal/models/userModel"
+	"gorm.io/gorm"
+	"log"
 )
 
 type AuthRepositoryImpl struct {
-	db *sql.DB
+	db *gorm.DB
 }
 
-func NewAuthRepository(db *sql.DB) *AuthRepositoryImpl {
+func NewAuthRepository(db *gorm.DB) *AuthRepositoryImpl {
 	return &AuthRepositoryImpl{db}
 }
 
-func (rep *AuthRepositoryImpl) Create() {
-
+func (repAuth *AuthRepositoryImpl) Create(payload authModel.RequestSignUpPayload) error {
+	newUser := userModel.User{
+		FirstName: payload.FirstName,
+		LastName:  payload.LastName,
+		Email:     payload.Email,
+		Password:  payload.Password,
+	}
+	result := repAuth.db.Create(&newUser)
+	if result.Error != nil {
+		log.Println(result.Error)
+		return result.Error
+	}
+	log.Printf("Successfully created user with ID = %d", newUser.ID)
+	return nil
 }
