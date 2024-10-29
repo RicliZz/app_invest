@@ -6,4 +6,5 @@ import (
 
 type AuthServiceInterface interface {
 	SignUp(payload authModel.RequestSignUpPayload) error
+	SignIn(payload authModel.RequestSignInPayload) (*authModel.ResponseSignInPayload, error)
 }

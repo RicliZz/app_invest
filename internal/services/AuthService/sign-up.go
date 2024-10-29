@@ -2,6 +2,7 @@ package authService
 
 import (
 	"errors"
+	"fmt"
 	"github.com/RicliZz/app_invest/internal/models/authModel"
 	"github.com/RicliZz/app_invest/internal/repository"
 	"github.com/go-playground/validator/v10"
@@ -28,10 +29,17 @@ func (s *AuthService) SignUp(payload authModel.RequestSignUpPayload) error {
 		return err
 	}
 	//Проверка на уже существующий Email
-	if s.repoUser.FindUserByEmail(payload.Email) {
+	if s.repoUser.IsEmailExists(payload.Email) {
 		log.Println(errors.New("User already exists"))
-		return errors.New("Email already exists")
+		return errors.New(fmt.Sprintf("User with email %s already exists", payload.Email))
 	}
+
+	hash, err := HashPassword(payload.Password)
+	if err != nil {
+		return err
+	}
+	payload.Password = hash
+
 	//Создание нового пользователя
 	if err := s.repoAuth.Create(payload); err != nil {
 		log.Println(err)
