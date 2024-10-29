@@ -1,0 +1,15 @@
+build:
+	@go build -o bin/invest_app cmd/app/main.go
+
+run:build
+	@./bin/invest_app
+
+new_migrate:
+	@migrate create -ext sql -dir db/migrations -seq $(filter-out $@, $(MAKECMDGOALS))
+
+migrate-up:
+	@migrate -database "postgres://postgres:2281337eshkere@localhost:5432/invest_db?sslmode=disable" -path db/migrations up
+
+migrate-down:
+	@migrate -database "postgres://postgres:2281337eshkere@localhost:5432/invest_db?sslmode=disable" -path db/migrations down
+
