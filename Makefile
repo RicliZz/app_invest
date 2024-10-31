@@ -13,3 +13,6 @@ migrate-up:
 migrate-down:
 	@migrate -database "postgres://postgres:2281337eshkere@localhost:5432/invest_db?sslmode=disable" -path db/migrations down
 
+jwt_secret:
+	@printf "\nJWT_SECRET=\"$(shell openssl rand -base64 32)\"\n" >> .env
+
