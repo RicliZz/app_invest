@@ -17,10 +17,11 @@ func NewAuthRepository(db *gorm.DB) *AuthRepositoryImpl {
 
 func (repAuth *AuthRepositoryImpl) Create(payload authModel.RequestSignUpPayload) error {
 	newUser := userModel.User{
-		FirstName: payload.FirstName,
-		LastName:  payload.LastName,
-		Email:     payload.Email,
-		Password:  payload.Password,
+		FirstName:  payload.FirstName,
+		LastName:   payload.LastName,
+		Patronymic: payload.Patronymic,
+		Email:      payload.Email,
+		Password:   payload.Password,
 	}
 	result := repAuth.db.Create(&newUser)
 	if result.Error != nil {
