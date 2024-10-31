@@ -1,9 +1,9 @@
 package authModel
 
 type RequestSignUpPayload struct {
-	FirstName  string `json:"firstname" validate:"required"`
-	LastName   string `json:"lastname"  validate:"required"`
-	Patronymic string `json:"patronymic" validate:"required"`
+	FirstName  string `json:"firstName" validate:"required"`
+	LastName   string `json:"lastName"  validate:"required"`
+	MiddleName string `json:"middleName" validate:"required"`
 	Email      string `json:"email"     validate:"required,email"`
 	Password   string `json:"password"  validate:"required,min=8"`
 }
