@@ -1,32 +1,21 @@
 package startUpModel
 
-import "time"
-
-type StartUpStatus int
-type StartUpStage int
-
-const (
-	CLOSE StartUpStatus = iota
-	ACTIVE
-)
-
-const (
-	IDEA StartUpStage = iota
-	PROTOTYPE
-	PRODUCT
+import (
+	enums "github.com/RicliZz/app_invest/internal/pkg"
+	"time"
 )
 
 type StartUp struct {
 	ID int `gorm:"primaryKey;autoIncrement" json:"id"`
 
 	//Информация о стартапе
-	Title             string        `gorm:"column:title"             json:"title"`
-	Topic             string        `gorm:"column:topic"             json:"topic"`
-	Idea              string        `gorm:"column:idea"              json:"idea"`
-	Strategy          string        `gorm:"column:strategy"          json:"strategy"`
-	HistoryOfCreation string        `gorm:"column:historyOfCreation" json:"historyOfCreation"`
-	Status            StartUpStatus `gorm:"column:status"            json:"status"`
-	Stage             StartUpStage  `gorm:"column:stage"             json:"stage"`
+	Title             string              `gorm:"column:title"             json:"title"`
+	Topic             string              `gorm:"column:topic"             json:"topic"`
+	Idea              string              `gorm:"column:idea"              json:"idea"`
+	Strategy          string              `gorm:"column:strategy"          json:"strategy"`
+	HistoryOfCreation string              `gorm:"column:historyOfCreation" json:"historyOfCreation"`
+	Status            enums.StartUpStatus `gorm:"column:status"            json:"status"`
+	Stage             enums.StartUpStage  `gorm:"column:stage"             json:"stage"`
 	//цель по финансированию, сколько нужно собрать
 	FundingGoal float64 `gorm:"column:fundingGoal"       json:"fundingGoal"`
 	//предлагаемый процент инвестору
