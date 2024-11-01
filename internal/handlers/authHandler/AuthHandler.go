@@ -1,4 +1,4 @@
-package authHandlers
+package authHandler
 
 import (
 	"github.com/RicliZz/app_invest/internal/models/authModel"
@@ -11,8 +11,8 @@ type AuthHandler struct {
 	service services.AuthServiceInterface
 }
 
-func NewAuthHandler(serv services.AuthServiceInterface) *AuthHandler {
-	return &AuthHandler{service: serv}
+func NewAuthHandler(service services.AuthServiceInterface) *AuthHandler {
+	return &AuthHandler{service: service}
 }
 
 func (h *AuthHandler) RegisterRoutes(router *gin.Engine) {

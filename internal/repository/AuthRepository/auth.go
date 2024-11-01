@@ -15,7 +15,7 @@ func NewAuthRepository(db *gorm.DB) *AuthRepositoryImpl {
 	return &AuthRepositoryImpl{db}
 }
 
-func (repAuth *AuthRepositoryImpl) Create(payload authModel.RequestSignUpPayload) error {
+func (repAuth *AuthRepositoryImpl) Create(payload authModel.RequestSignUpPayload) (int, error) {
 	newUser := userModel.User{
 		FirstName:  payload.FirstName,
 		LastName:   payload.LastName,
@@ -26,8 +26,8 @@ func (repAuth *AuthRepositoryImpl) Create(payload authModel.RequestSignUpPayload
 	result := repAuth.db.Create(&newUser)
 	if result.Error != nil {
 		log.Println(result.Error)
-		return result.Error
+		return 0, result.Error
 	}
 	log.Printf("Successfully created user with ID = %d", newUser.ID)
-	return nil
+	return newUser.ID, nil
 }
