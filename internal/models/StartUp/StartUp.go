@@ -26,8 +26,6 @@ type StartUp struct {
 	FounderEmail    string         `gorm:"column:founderEmail"    json:"founderEmail"`
 	FounderSocials  FounderSocials `gorm:"column:founderSocials"  json:"founderSocials"`
 
-	//Ссылки
-
 	//Информация о дате создания и апдейта
 	CreatedAt time.Time `gorm:"column:createdAt" json:"createdAt"`
 	UpdatedAt time.Time `gorm:"column:updatedAt" json:"updatedAt"`

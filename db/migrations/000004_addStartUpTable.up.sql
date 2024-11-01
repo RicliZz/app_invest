@@ -1,5 +1,6 @@
 create table if not exists startUp (
                          id SERIAL PRIMARY KEY,
+                         userId int not null,
 
     -- Информация о стартапе
                          title VARCHAR(100) NOT NULL,
