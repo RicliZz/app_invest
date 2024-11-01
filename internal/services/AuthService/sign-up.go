@@ -11,14 +11,17 @@ import (
 )
 
 type AuthService struct {
-	repoAuth repository.AuthRepository
-	repoUser repository.UserRepository
+	repoAuth    repository.AuthRepository
+	repoUser    repository.UserRepository
+	repoDetails repository.UserDetailsRepository
 }
 
-func NewAuthService(repoAuth repository.AuthRepository, repoUser repository.UserRepository) *AuthService {
+func NewAuthService(repoAuth repository.AuthRepository, repoUser repository.UserRepository,
+	repoDetails repository.UserDetailsRepository) *AuthService {
 	return &AuthService{
-		repoAuth: repoAuth,
-		repoUser: repoUser,
+		repoAuth:    repoAuth,
+		repoUser:    repoUser,
+		repoDetails: repoDetails,
 	}
 }
 
@@ -42,7 +45,13 @@ func (s *AuthService) SignUp(payload authModel.RequestSignUpPayload) error {
 	payload.Password = hash
 
 	//Создание нового пользователя
-	if err := s.repoAuth.Create(payload); err != nil {
+	userID, err := s.repoAuth.Create(payload)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	//Создание деталей для пользователя
+	if err = s.repoDetails.CreateDetailsByUserId(int64(userID)); err != nil {
 		log.Println(err)
 		return err
 	}

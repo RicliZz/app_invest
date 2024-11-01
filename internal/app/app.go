@@ -3,11 +3,14 @@ package app
 import (
 	"fmt"
 	"github.com/RicliZz/app_invest/config"
-	authHandler "github.com/RicliZz/app_invest/internal/handlers"
+	"github.com/RicliZz/app_invest/internal/handlers/authHandler"
+	"github.com/RicliZz/app_invest/internal/handlers/profileHandler"
 	"github.com/RicliZz/app_invest/internal/repository/AuthRepository"
+	"github.com/RicliZz/app_invest/internal/repository/UserDetailsRepository"
 	"github.com/RicliZz/app_invest/internal/repository/UserRepository"
 	"github.com/RicliZz/app_invest/internal/server"
 	"github.com/RicliZz/app_invest/internal/services/AuthService"
+	profileService "github.com/RicliZz/app_invest/internal/services/ProfileService"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
@@ -36,14 +39,20 @@ func Run(configpath string) {
 	//REPOSITORIES
 	authRepo := authRepository.NewAuthRepository(db)
 	userRepo := UserRepository.NewUserRepositoryImpl(db)
+	userDetailsRepo := UserDetailsRepository.NewUserDetailsRepositoryImpl(db)
 
 	//SERVICES
-	authServ := authService.NewAuthService(authRepo, userRepo)
+	authServ := authService.NewAuthService(authRepo, userRepo, userDetailsRepo)
+	profileServ := profileService.NewProfileService(userRepo, userDetailsRepo)
 
 	//HANDLERS
 	authHand := authHandler.NewAuthHandler(authServ)
+	profileHand := profileHandler.NewProfileHandler(profileServ)
 
+	//REGISRER_ROUTES
 	authHand.RegisterRoutes(router)
+	profileHand.RegisterRoutes(router)
+
 	srv := server.NewAPIServer(cfg, router)
 	log.Println("Server success running")
 	srv.Start()
