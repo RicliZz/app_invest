@@ -33,17 +33,21 @@ type StartUp struct {
 	OfferedPercent float64 `gorm:"column:offeredPercent"    json:"offeredPercent"`
 
 	//Информация о создателе
-	FounderFullName string `gorm:"column:founderFullName" json:"founderFullName"`
-	FounderEmail    string `gorm:"column:founderEmail"    json:"founderEmail"`
+	FounderFullName string         `gorm:"column:founderFullName" json:"founderFullName"`
+	FounderEmail    string         `gorm:"column:founderEmail"    json:"founderEmail"`
+	FounderSocials  FounderSocials `gorm:"column:founderSocials"  json:"founderSocials"`
 
 	//Ссылки
+
+	//Информация о дате создания и апдейта
+	CreatedAt time.Time `gorm:"column:createdAt" json:"createdAt"`
+	UpdatedAt time.Time `gorm:"column:updatedAt" json:"updatedAt"`
+}
+
+type FounderSocials struct {
 	WebsiteLink   string `gorm:"column:website"       json:"website"`
 	VkLink        string `gorm:"column:vkLink"        json:"vkLink"`
 	TelegramLink  string `gorm:"column:telegramLink"  json:"telegramLink"`
 	WhatsUpLink   string `gorm:"column:whatsUpLink"   json:"whatsUpLink"`
 	InstagramLink string `gorm:"column:instagramLink" json:"instagramLink"`
-
-	//Информация о дате создания и апдейта
-	CreatedAt time.Time `gorm:"column:createdAt" json:"createdAt"`
-	UpdatedAt time.Time `gorm:"column:updatedAt" json:"updatedAt"`
 }
