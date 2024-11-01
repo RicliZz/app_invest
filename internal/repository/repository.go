@@ -1,6 +1,7 @@
 package repository
 
 import (
+	startUpModel "github.com/RicliZz/app_invest/internal/models/StartUp"
 	"github.com/RicliZz/app_invest/internal/models/authModel"
 	"github.com/RicliZz/app_invest/internal/models/userModel"
 )
@@ -18,4 +19,8 @@ type UserRepository interface {
 type UserDetailsRepository interface {
 	CreateDetailsByUserId(userId int64) error
 	GetUserDetails(userId int64) (*userModel.UserDetails, error)
+}
+
+type StartUpRepository interface {
+	Create(payload startUpModel.StartUp) error
 }

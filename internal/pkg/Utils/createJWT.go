@@ -1,4 +1,4 @@
-package authService
+package Utils
 
 import (
 	"github.com/golang-jwt/jwt/v5"

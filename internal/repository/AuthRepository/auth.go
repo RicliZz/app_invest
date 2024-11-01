@@ -19,7 +19,7 @@ func (repAuth *AuthRepositoryImpl) Create(payload authModel.RequestSignUpPayload
 	newUser := userModel.User{
 		FirstName:  payload.FirstName,
 		LastName:   payload.LastName,
-		Patronymic: payload.Patronymic,
+		MiddleName: payload.MiddleName,
 		Email:      payload.Email,
 		Password:   payload.Password,
 	}
