@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/RicliZz/app_invest/internal/models/authModel"
+	"github.com/RicliZz/app_invest/internal/pkg/Utils"
 	"github.com/RicliZz/app_invest/internal/repository"
 	"github.com/go-playground/validator/v10"
 	"log"
@@ -34,7 +35,7 @@ func (s *AuthService) SignUp(payload authModel.RequestSignUpPayload) error {
 		return errors.New(fmt.Sprintf("User with email %s already exists", payload.Email))
 	}
 
-	hash, err := HashPassword(payload.Password)
+	hash, err := Utils.HashPassword(payload.Password)
 	if err != nil {
 		return err
 	}
