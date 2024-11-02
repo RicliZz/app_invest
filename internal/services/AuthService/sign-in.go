@@ -3,7 +3,7 @@ package authService
 import (
 	"fmt"
 	"github.com/RicliZz/app_invest/internal/models/authModel"
-	"github.com/RicliZz/app_invest/internal/pkg/Utils"
+	Utils2 "github.com/RicliZz/app_invest/pkg/Utils"
 	"github.com/go-playground/validator/v10"
 	"github.com/joho/godotenv"
 	"log"
@@ -21,7 +21,7 @@ func (s *AuthService) SignIn(payload authModel.RequestSignInPayload) (*authModel
 	if err != nil {
 		return nil, fmt.Errorf("invalid email")
 	}
-	if !Utils.ComparePasswords(checkUser.Password, []byte(payload.Password)) {
+	if !Utils2.ComparePasswords(checkUser.Password, []byte(payload.Password)) {
 		return nil, fmt.Errorf("invalid password")
 	}
 
@@ -30,7 +30,7 @@ func (s *AuthService) SignIn(payload authModel.RequestSignInPayload) (*authModel
 		return nil, err
 	}
 	secret := []byte(os.Getenv("JWT_SECRET"))
-	token, err := Utils.CreateJWT(secret, checkUser.ID)
+	token, err := Utils2.CreateJWT(secret, checkUser.ID)
 	if err != nil {
 		return nil, err
 	}

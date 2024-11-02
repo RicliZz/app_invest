@@ -30,7 +30,7 @@ func (s *ProfileService) GetProfile(userId int64) (*userProfileModel.UserProfile
 	return &userProfileModel.UserProfile{
 		FirstName:  user.FirstName,
 		LastName:   user.LastName,
-		Patronymic: user.Patronymic,
+		MiddleName: user.MiddleName,
 		Email:      user.Email,
 		Balance:    userDetails.Balance,
 	}, nil

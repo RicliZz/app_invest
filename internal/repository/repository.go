@@ -23,4 +23,5 @@ type UserDetailsRepository interface {
 
 type StartUpRepository interface {
 	Create(payload startUpModel.StartUp) error
+	IsTitleExists(title string) bool
 }

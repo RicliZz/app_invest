@@ -28,6 +28,6 @@ func (repAuth *AuthRepositoryImpl) Create(payload authModel.RequestSignUpPayload
 		log.Println(result.Error)
 		return 0, result.Error
 	}
-	log.Printf("Successfully created user with ID = %d", newUser.ID)
+	log.Printf("Successfully created user with ID = %d\n", newUser.ID)
 	return newUser.ID, nil
 }

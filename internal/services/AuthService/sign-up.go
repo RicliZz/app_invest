@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/RicliZz/app_invest/internal/models/authModel"
-	"github.com/RicliZz/app_invest/internal/pkg/Utils"
 	"github.com/RicliZz/app_invest/internal/repository"
+	"github.com/RicliZz/app_invest/pkg/Utils"
 	"github.com/go-playground/validator/v10"
 	"log"
 )
