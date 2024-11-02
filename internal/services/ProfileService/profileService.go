@@ -1,8 +1,10 @@
 package profileService
 
 import (
-	userProfileModel "github.com/RicliZz/app_invest/internal/models/userProfile"
+	"github.com/RicliZz/app_invest/internal/models/userModel"
+	"github.com/RicliZz/app_invest/pkg/Utils"
 	"github.com/RicliZz/app_invest/internal/repository"
+	"github.com/gin-gonic/gin"
 	"log"
 )
 
@@ -15,23 +17,26 @@ func NewProfileService(repUser repository.UserRepository, repDetails repository.
 	return &ProfileService{repUser, repDetails}
 }
 
-func (s *ProfileService) GetProfile(userId int64) (*userProfileModel.UserProfile, error) {
+func (s *ProfileService) GetProfile(c *gin.Context) {
+
+	userId := Utils.GetUserIDFromContext(c)
+
 	user, err := s.repoUser.GetUserById(userId)
 	if err != nil {
 		log.Println(err)
-		return nil, err
+		return
 	}
 	userDetails, err := s.repoDetails.GetUserDetails(userId)
 	if err != nil {
 		log.Println(err)
-		return nil, err
+		return
 	}
 
-	return &userProfileModel.UserProfile{
-		FirstName:  user.FirstName,
-		LastName:   user.LastName,
-		MiddleName: user.MiddleName,
-		Email:      user.Email,
-		Balance:    userDetails.Balance,
-	}, nil
+	c.JSON(200, &userModel.User{
+		FirstName:   user.FirstName,
+		LastName:    user.LastName,
+		MiddleName:  user.MiddleName,
+		Email:       user.Email,
+		UserDetails: *userDetails,
+	})
 }

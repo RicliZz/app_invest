@@ -1,39 +1,56 @@
 package authService
 
 import (
-	"fmt"
 	"github.com/RicliZz/app_invest/internal/models/authModel"
-	Utils2 "github.com/RicliZz/app_invest/pkg/Utils"
+	"github.com/RicliZz/app_invest/pkg/Utils"
+	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/joho/godotenv"
 	"log"
+	"net/http"
 	"os"
 )
 
-func (s *AuthService) SignIn(payload authModel.RequestSignInPayload) (*authModel.ResponseSignInPayload, error) {
+func (s *AuthService) SignIn(c *gin.Context) {
+	var payload authModel.RequestSignInPayload
+
+	if err := c.ShouldBindJSON(&payload); err != nil {
+		log.Println(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	validate := validator.New(validator.WithRequiredStructEnabled())
 	if err := validate.Struct(payload); err != nil {
 		log.Println(err)
-		return nil, err
+		c.JSON(http.StatusBadRequest, gin.H{})
+		return
 	}
 
 	checkUser, err := s.repoUser.GetUserByEmail(payload.Email)
 	if err != nil {
-		return nil, fmt.Errorf("invalid email")
+		log.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{})
+		return
 	}
-	if !Utils2.ComparePasswords(checkUser.Password, []byte(payload.Password)) {
-		return nil, fmt.Errorf("invalid password")
+	if !Utils.ComparePasswords(checkUser.Password, []byte(payload.Password)) {
+		log.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{})
+		return
 	}
 
 	err = godotenv.Load()
 	if err != nil {
-		return nil, err
+		log.Println(err)
+		return
 	}
 	secret := []byte(os.Getenv("JWT_SECRET"))
-	token, err := Utils2.CreateJWT(secret, checkUser.ID)
+	token, err := Utils.CreateJWT(secret, checkUser.ID)
 	if err != nil {
-		return nil, err
+		log.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{})
+		return
 	}
 
-	return &authModel.ResponseSignInPayload{token}, nil
+	c.JSON(200, gin.H{"Token": token})
 }
