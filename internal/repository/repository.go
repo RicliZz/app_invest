@@ -14,6 +14,8 @@ type UserRepository interface {
 	IsEmailExists(email string) bool
 	GetUserById(id int64) (*userModel.User, error)
 	GetUserByEmail(email string) (*userModel.User, error)
+	SaveUpdates(user userModel.User) error
+	DeleteUser(userID int64) error
 }
 
 type UserDetailsRepository interface {

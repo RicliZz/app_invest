@@ -2,8 +2,8 @@ package profileService
 
 import (
 	"github.com/RicliZz/app_invest/internal/models/userModel"
-	"github.com/RicliZz/app_invest/pkg/Utils"
 	"github.com/RicliZz/app_invest/internal/repository"
+	"github.com/RicliZz/app_invest/pkg/Utils"
 	"github.com/gin-gonic/gin"
 	"log"
 )
