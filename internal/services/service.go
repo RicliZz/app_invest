@@ -1,9 +1,9 @@
 package services
 
 import (
-	startUpModel "github.com/RicliZz/app_invest/internal/models/StartUp"
 	"github.com/RicliZz/app_invest/internal/models/authModel"
 	userProfileModel "github.com/RicliZz/app_invest/internal/models/userProfile"
+	"github.com/gin-gonic/gin"
 )
 
 type AuthServiceInterface interface {
@@ -16,5 +16,5 @@ type ProfileServiceInterface interface {
 }
 
 type StartUpServiceInterface interface {
-	CreateNewStartUp(payload startUpModel.StartUp) error
+	CreateNewStartUp(ctx *gin.Context)
 }
