@@ -14,7 +14,7 @@ func NewProfileHandler(service services.ProfileServiceInterface) *ProfileHandler
 	return &ProfileHandler{service: service}
 }
 
-func (h *ProfileHandler) RegisterRoutes(router *gin.Engine) {
+func (h *ProfileHandler) RegisterRoutes(router *gin.RouterGroup) {
 	profileRouter := router.Group("/profile")
 	profileRouter.Use(Utils.AuthMiddleware())
 	{

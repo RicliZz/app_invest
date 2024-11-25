@@ -33,6 +33,13 @@ func (s *AuthService) SignIn(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{})
 		return
 	}
+
+	if !checkUser.EmailConfirm {
+		log.Println("Not confirm email address")
+		c.JSON(http.StatusBadRequest, gin.H{})
+		return
+	}
+
 	if !Utils.ComparePasswords(checkUser.Password, []byte(payload.Password)) {
 		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{})

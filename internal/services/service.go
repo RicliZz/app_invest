@@ -7,6 +7,7 @@ import (
 type AuthServiceInterface interface {
 	SignUp(c *gin.Context)
 	SignIn(c *gin.Context)
+	VerifyToken(c *gin.Context)
 }
 
 type ProfileServiceInterface interface {
