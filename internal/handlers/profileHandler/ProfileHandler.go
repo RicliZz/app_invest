@@ -1,8 +1,8 @@
 package profileHandler
 
 import (
-	"github.com/RicliZz/app_invest/internal/pkg/Utils"
 	"github.com/RicliZz/app_invest/internal/services"
+	"github.com/RicliZz/app_invest/pkg/Utils"
 	"github.com/gin-gonic/gin"
 )
 

@@ -14,5 +14,9 @@ type ProfileServiceInterface interface {
 }
 
 type StartUpServiceInterface interface {
-	CreateNewStartUp(ctx *gin.Context)
+	CreateStartUp(ctx *gin.Context)
+	DeleteStartUp(ctx *gin.Context)
+	UpdateStartUp(ctx *gin.Context)
+	GetStartUp(ctx *gin.Context)
+	GetAllStartUps(ctx *gin.Context)
 }
