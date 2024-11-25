@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	docs "github.com/RicliZz/app_invest/cmd/docs"
 	"github.com/RicliZz/app_invest/config"
 	"github.com/RicliZz/app_invest/internal/handlers/authHandler"
 	"github.com/RicliZz/app_invest/internal/handlers/profileHandler"
@@ -16,6 +17,8 @@ import (
 	"github.com/RicliZz/app_invest/internal/services/StartUpService"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"log"
@@ -23,7 +26,6 @@ import (
 )
 
 func Run(configpath string) {
-	router := gin.Default()
 	cfg := config.InitConfig(configpath)
 	err := godotenv.Load(".env")
 	if err != nil {
@@ -55,10 +57,16 @@ func Run(configpath string) {
 	profileHand := profileHandler.NewProfileHandler(profileServ)
 	startUpHand := startUpHandler.NewStartUpHandler(startUpServ)
 
+	//SWAG AND DEFAULT_ROUTER
+	router := gin.Default()
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	docs.SwaggerInfo.BasePath = "/api/v1"
+	api := router.Group("/api/v1/")
+
 	//REGISTER_ROUTES
-	authHand.RegisterRoutes(router)
-	profileHand.RegisterRoutes(router)
-	startUpHand.RegisterRoutes(router)
+	authHand.RegisterRoutes(api)
+	profileHand.RegisterRoutes(api)
+	startUpHand.RegisterRoutes(api)
 
 	srv := server.NewAPIServer(cfg, router)
 	log.Println("Server success running")

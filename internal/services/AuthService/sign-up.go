@@ -3,10 +3,11 @@ package authService
 import (
 	"errors"
 	"github.com/RicliZz/app_invest/internal/models/authModel"
-	"github.com/RicliZz/app_invest/pkg/Utils"
 	"github.com/RicliZz/app_invest/internal/repository"
+	"github.com/RicliZz/app_invest/pkg/Utils"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
+	"github.com/google/uuid"
 	"log"
 	"net/http"
 )
@@ -56,19 +57,22 @@ func (s *AuthService) SignUp(c *gin.Context) {
 		return
 	}
 	payload.Password = hash
+	emailToken := uuid.New()
 
 	//Создание нового пользователя
-	userID, err := s.repoAuth.Create(payload)
+	userID, err := s.repoAuth.Create(payload, emailToken)
 	if err != nil {
 		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	Utils.SendEmail(payload, emailToken)
 	//Создание деталей для пользователя
 	if err = s.repoDetails.CreateDetailsByUserId(int64(userID)); err != nil {
 		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(201, "User successfully created!")
+	c.JSON(201, "Пожалуйста, проверьте свою почту для завершения регистрации.")
 }

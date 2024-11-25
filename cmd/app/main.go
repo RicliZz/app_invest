@@ -1,6 +1,8 @@
 package main
 
-import "github.com/RicliZz/app_invest/internal/app"
+import (
+	"github.com/RicliZz/app_invest/internal/app"
+)
 
 const config_path = "config.yml"
 

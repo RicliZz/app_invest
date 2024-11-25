@@ -13,7 +13,7 @@ func NewStartUpHandler(service services.StartUpServiceInterface) *StartUpHandler
 	return &StartUpHandler{service: service}
 }
 
-func (h *StartUpHandler) RegisterRoutes(router *gin.Engine) {
+func (h *StartUpHandler) RegisterRoutes(router *gin.RouterGroup) {
 	startUpRouter := router.Group("/startup")
 	{
 		suIDRouter := startUpRouter.Group("/:id")
