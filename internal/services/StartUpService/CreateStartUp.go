@@ -20,7 +20,7 @@ func NewStartUpService(repoStartUp repository.StartUpRepository) *StartUpService
 	}
 }
 
-func (s *StartUpService) CreateNewStartUp(c *gin.Context) {
+func (s *StartUpService) CreateStartUp(c *gin.Context) {
 	var payload startUpModel.StartUp
 	if err := c.ShouldBind(&payload); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

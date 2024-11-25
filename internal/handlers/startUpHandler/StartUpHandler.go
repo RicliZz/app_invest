@@ -2,6 +2,7 @@ package startUpHandler
 
 import (
 	"github.com/RicliZz/app_invest/internal/services"
+	"github.com/RicliZz/app_invest/pkg/Utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,22 +19,18 @@ func (h *StartUpHandler) RegisterRoutes(router *gin.RouterGroup) {
 	{
 		suIDRouter := startUpRouter.Group("/:id")
 		{
-			suIDRouter.GET("/", func(c *gin.Context) {
+			suIDRouter.Use(Utils.ValidateAndExtractIDMiddleware())
 
-			})
+			suIDRouter.GET("/", h.service.GetStartUp)
 
-			suIDRouter.PATCH("/update", func(c *gin.Context) {
+			suIDRouter.PATCH("/update", h.service.UpdateStartUp)
 
-			})
-
-			suIDRouter.DELETE("/delete", func(c *gin.Context) {
-
-			})
+			suIDRouter.DELETE("/delete", h.service.DeleteStartUp)
 
 		}
 
-		startUpRouter.GET("/search-all", func(c *gin.Context) {})
+		startUpRouter.GET("/search-all", h.service.GetAllStartUps)
 
-		startUpRouter.POST("/create", h.service.CreateNewStartUp)
+		startUpRouter.POST("/create", h.service.CreateStartUp)
 	}
 }
