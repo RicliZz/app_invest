@@ -6,6 +6,7 @@ type User struct {
 	LastName     string `gorm:"column:lastName"          json:"lastName"`
 	MiddleName   string `gorm:"column:middleName"        json:"middleName"`
 	Email        string `gorm:"column:email"             json:"email"`
+	Role         string `gorm:"column:role"              json:"role"`
 	EmailConfirm bool   `gorm:"column:emailConfirm"      json:"emailConfirm"`
 	Password     string `gorm:"column:password"          json:"password"`
 	UserDetails  UserDetails

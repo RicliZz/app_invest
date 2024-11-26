@@ -17,9 +17,20 @@ func NewProfileService(repUser repository.UserRepository, repDetails repository.
 	return &ProfileService{repUser, repDetails}
 }
 
-func (s *ProfileService) GetProfile(c *gin.Context) {
+// @BasePath /api/v1
 
-	userId := Utils.GetUserIDFromContext(c)
+// @Summary getProfile
+// @Description Посмотреть СВОЙ профиль
+// @Tags Profile
+// @Accept  json
+// @Produce  json
+// @Success 201 {string} string ""
+// @Failure 400 {string} string ""
+// @Security BearerAuth
+// @Router /profile/ [get]
+func (s *ProfileService) GetMyProfile(c *gin.Context) {
+
+	userId := Utils.GetUserFromContext(c)
 
 	user, err := s.repoUser.GetUserById(userId)
 	if err != nil {

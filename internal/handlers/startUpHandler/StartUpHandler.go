@@ -16,6 +16,7 @@ func NewStartUpHandler(service services.StartUpServiceInterface) *StartUpHandler
 
 func (h *StartUpHandler) RegisterRoutes(router *gin.RouterGroup) {
 	startUpRouter := router.Group("/startup")
+	startUpRouter.Use(Utils.AuthMiddleware())
 	{
 		suIDRouter := startUpRouter.Group("/:id")
 		{

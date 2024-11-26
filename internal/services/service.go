@@ -11,7 +11,7 @@ type AuthServiceInterface interface {
 }
 
 type ProfileServiceInterface interface {
-	GetProfile(c *gin.Context)
+	GetMyProfile(c *gin.Context)
 	PatchProfile(c *gin.Context)
 	DeleteProfile(c *gin.Context)
 }

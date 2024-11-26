@@ -6,7 +6,7 @@ import (
 )
 
 func (s *ProfileService) DeleteProfile(c *gin.Context) {
-	userID := Utils.GetUserIDFromContext(c)
+	userID := Utils.GetUserFromContext(c)
 	err := s.repoUser.DeleteUser(userID)
 	if err != nil {
 		c.JSON(500, "Not deleted")

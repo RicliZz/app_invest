@@ -11,15 +11,15 @@ import (
 	"strconv"
 )
 
-func ExtractUserIDFromJWT(c *gin.Context) (int64, error) {
+func ExtractUserFromJWT(c *gin.Context) (int64, string, error) {
 	authHeader := c.Request.Header.Get("Authorization")
 	if authHeader == "" {
-		return 0, errors.New("Authorization header is empty")
+		return 0, "", errors.New("Authorization header is empty")
 	}
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
-		return 0, err
+		return 0, "", err
 	}
 	token, err := jwt.Parse(authHeader, func(token *jwt.Token) (interface{}, error) {
 		// Проверка метода подписи
@@ -32,14 +32,15 @@ func ExtractUserIDFromJWT(c *gin.Context) (int64, error) {
 
 	if err != nil {
 		log.Println(err)
-		return 0, err
+		return 0, "", err
 	}
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		userID, err := strconv.ParseInt(claims["userID"].(string), 10, 64)
+		role := claims["role"].(string)
 		if err != nil {
-			return 0, err
+			return 0, "", err
 		}
-		return userID, nil
+		return userID, role, nil
 	}
-	return 0, fmt.Errorf("Invalid token")
+	return 0, "", fmt.Errorf("Invalid token")
 }
