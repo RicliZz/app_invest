@@ -4,7 +4,7 @@ create table if not exists startUp (
 
     -- Информация о стартапе
                          title VARCHAR(100) NOT NULL,
-                         topic VARCHAR(100) NOT NULL,
+                         topic int NOT NULL,
                          idea TEXT DEFAULT '',
                          strategy TEXT DEFAULT '',
                          historyOfCreation TEXT DEFAULT '',
