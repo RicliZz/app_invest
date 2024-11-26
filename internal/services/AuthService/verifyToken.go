@@ -2,22 +2,24 @@ package authService
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 	"log"
 	"net/http"
 )
 
 func (s *AuthService) VerifyToken(c *gin.Context) {
-	token := c.Param("emailToken")
-	if token == "" {
+	emailToken := c.Param("emailToken")
+	if emailToken == "" {
 		log.Println("token required")
 		c.JSON(http.StatusBadRequest, gin.H{"error": "token is required"})
 		return
 	}
 
-	uuidToken, err := uuid.Parse(token)
+	email, err := s.redisClient.Get(c.Request.Context(), emailToken).Result()
+	if err != nil {
+		log.Println(err)
+	}
 
-	user, err := s.repoUser.GetUserByEmailToken(uuidToken)
+	user, err := s.repoUser.GetUserByEmail(email)
 	if err != nil {
 		log.Println(err, "Not find user")
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -29,4 +31,5 @@ func (s *AuthService) VerifyToken(c *gin.Context) {
 		log.Println(err, "Not save user")
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
+	c.JSON(http.StatusOK, "Успешно!")
 }

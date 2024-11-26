@@ -17,6 +17,7 @@ import (
 	"github.com/RicliZz/app_invest/internal/services/StartUpService"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"github.com/redis/go-redis/v9"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"gorm.io/driver/postgres"
@@ -26,11 +27,14 @@ import (
 )
 
 func Run(configpath string) {
+	//config
 	cfg := config.InitConfig(configpath)
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
+
+	//postgres
 	dsn := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
 		cfg.Db.Host, cfg.Db.Username, os.Getenv("DB_PASSWORD"), cfg.Db.Name, cfg.Db.Port,
@@ -41,6 +45,14 @@ func Run(configpath string) {
 	}
 	log.Println("Successfully connected to the database")
 
+	//redis
+	rdb := redis.NewClient(&redis.Options{
+		Addr:     "localhost:6379",
+		Password: "ricliznedokyrill",
+		DB:       0,
+	})
+	log.Println("Successfully connected to the redis server")
+
 	//REPOSITORIES
 	authRepo := authRepository.NewAuthRepository(db)
 	userRepo := UserRepository.NewUserRepositoryImpl(db)
@@ -48,7 +60,7 @@ func Run(configpath string) {
 	startUpRepo := StartUpRepository.NewStartUpRepository(db)
 
 	//SERVICES
-	authServ := authService.NewAuthService(authRepo, userRepo, userDetailsRepo)
+	authServ := authService.NewAuthService(authRepo, userRepo, userDetailsRepo, rdb)
 	profileServ := profileService.NewProfileService(userRepo, userDetailsRepo)
 	startUpServ := StartUpService.NewStartUpService(startUpRepo)
 

@@ -1,1 +1,1 @@
-ALTER TABLE users ADD COLUMN IF NOT EXISTS emailToken uuid;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS "emailToken" uuid;

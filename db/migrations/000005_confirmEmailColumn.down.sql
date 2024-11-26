@@ -1,1 +1,1 @@
-ALTER TABLE users DROP COLUMN IF EXISTS emailConfirm;
+ALTER TABLE users DROP COLUMN IF EXISTS "emailConfirm";

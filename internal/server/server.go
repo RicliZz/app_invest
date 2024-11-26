@@ -23,6 +23,7 @@ func NewAPIServer(cfg config.Config, router *gin.Engine) *APIServer {
 
 func (s *APIServer) Start() {
 	if err := s.httpServer.ListenAndServe(); err != nil {
+		log.Println(err)
 		log.Fatal("Server not started")
 	}
 }

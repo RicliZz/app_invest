@@ -1,1 +1,1 @@
-ALTER TABLE users DROP COLUMN IF EXISTS middleName;
+ALTER TABLE users DROP COLUMN IF EXISTS "middleName";

@@ -2,7 +2,6 @@ package UserRepository
 
 import (
 	"github.com/RicliZz/app_invest/internal/models/userModel"
-	"github.com/google/uuid"
 	"gorm.io/gorm"
 	"log"
 )
@@ -41,19 +40,6 @@ func (rep *UserRepositoryImpl) GetUserByEmail(email string) (*userModel.User, er
 	var user userModel.User
 
 	result := rep.db.First(&user, "email = ?", email)
-
-	if result.Error != nil {
-		log.Println("Error with find user")
-		return nil, result.Error
-	}
-
-	return &user, nil
-}
-
-func (rep *UserRepositoryImpl) GetUserByEmailToken(token uuid.UUID) (*userModel.User, error) {
-	var user userModel.User
-
-	result := rep.db.Find(&user, "\"emailToken\" = ?", token)
 
 	if result.Error != nil {
 		log.Println("Error with find user")
