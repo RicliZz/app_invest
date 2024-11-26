@@ -3,7 +3,6 @@ package authRepository
 import (
 	"github.com/RicliZz/app_invest/internal/models/authModel"
 	"github.com/RicliZz/app_invest/internal/models/userModel"
-	"github.com/google/uuid"
 	"gorm.io/gorm"
 	"log"
 )
@@ -16,13 +15,12 @@ func NewAuthRepository(db *gorm.DB) *AuthRepositoryImpl {
 	return &AuthRepositoryImpl{db}
 }
 
-func (repAuth *AuthRepositoryImpl) Create(payload authModel.RequestSignUpPayload, emailToken uuid.UUID) (int, error) {
+func (repAuth *AuthRepositoryImpl) Create(payload authModel.RequestSignUpPayload) (int, error) {
 	newUser := userModel.User{
 		FirstName:  payload.FirstName,
 		LastName:   payload.LastName,
 		MiddleName: payload.MiddleName,
 		Email:      payload.Email,
-		EmailToken: emailToken,
 		Password:   payload.Password,
 	}
 	result := repAuth.db.Create(&newUser)

@@ -5,12 +5,10 @@ import (
 	"github.com/RicliZz/app_invest/internal/models/authModel"
 	"github.com/google/uuid"
 	"gopkg.in/gomail.v2"
-	"log"
 )
 
 func SendEmail(payload authModel.RequestSignUpPayload, emailToken uuid.UUID) {
 	m := gomail.NewMessage()
-	log.Println(payload.Email)
 	m.SetHeader("From", "ricliz7@yandex.ru")
 	m.SetHeader("To", payload.Email)
 	m.SetHeader("Subject", "Добро пожаловать в HaveIdea!")
@@ -21,10 +19,11 @@ func SendEmail(payload authModel.RequestSignUpPayload, emailToken uuid.UUID) {
 				
 				Спасибо за регистрацию в нашем сервисе. Чтобы завершить процесс регистрации, подтвердите ваш Email, перейдя по ссылке ниже:
 				%s
+				Оно действует ровно 24 часа!
 
-				Если вы не регистрировались в HaveIdea просто проигнорируйте это письмо
+				Если вы не регистрировались в HaveIdea просто проигнорируйте это письмо.
 
-												С уважением, команда HaveIdea!`, payload.FirstName, payload.MiddleName, url)
+																	С уважением, команда HaveIdea!`, payload.FirstName, payload.MiddleName, url)
 
 	m.SetBody("text/plain", body)
 	d := gomail.NewDialer("smtp.yandex.ru", 587, "ricliz7@yandex.ru", "lwztvnjvrviwqqsg")

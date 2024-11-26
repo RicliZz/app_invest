@@ -11,6 +11,15 @@ import (
 	"os"
 )
 
+// @Summary sign-in
+// @Description Вход в систему
+// @Tags Authorization
+// @Accept  json
+// @Produce  json
+// @Param   body  body  authModel.RequestSignInPayload  true  "Данные для входа"
+// @Success 200 {object} map[string]string "JWT токен"
+// @Failure 400 {string} string ""
+// @Router /auth/sign-in [post]
 func (s *AuthService) SignIn(c *gin.Context) {
 	var payload authModel.RequestSignInPayload
 
