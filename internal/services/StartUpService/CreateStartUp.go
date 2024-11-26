@@ -46,6 +46,8 @@ func (s *StartUpService) CreateStartUp(c *gin.Context) {
 			return
 		}
 
+		//добавить добавление поля userid
+
 	}
 
 }
