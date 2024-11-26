@@ -14,7 +14,7 @@ type StartUp struct {
 
 	//Информация о стартапе
 	Title             string              `gorm:"column:title"             json:"title" validate:"required"`
-	Topic             string              `gorm:"column:topic"             json:"topic" validate:"required"`
+	Topic             enums.StartUpTopic  `gorm:"column:topic"             json:"topic" validate:"required"`
 	Idea              string              `gorm:"column:idea"              json:"idea" validate:"required"`
 	Strategy          string              `gorm:"column:strategy"          json:"strategy"`
 	HistoryOfCreation string              `gorm:"column:historyofcreation" json:"historyOfCreation"`
