@@ -90,6 +90,48 @@ paths:
       summary: sign-up
       tags:
       - Authorization
+  /profile/:
+    get:
+      consumes:
+      - application/json
+      description: Посмотреть СВОЙ профиль
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: getProfile
+      tags:
+      - Profile
+  /startup/create:
+    post:
+      consumes:
+      - application/json
+      description: Создать новый стартап
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: createStartUp
+      tags:
+      - StartUp
 securityDefinitions:
   BearerAuth:
     in: header

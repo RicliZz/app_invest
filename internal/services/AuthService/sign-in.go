@@ -61,7 +61,7 @@ func (s *AuthService) SignIn(c *gin.Context) {
 		return
 	}
 	secret := []byte(os.Getenv("JWT_SECRET"))
-	token, err := Utils.CreateJWT(secret, checkUser.ID)
+	token, err := Utils.CreateJWT(secret, checkUser.ID, checkUser.Role)
 	if err != nil {
 		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{})

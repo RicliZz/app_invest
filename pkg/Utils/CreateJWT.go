@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func CreateJWT(secret []byte, userID int) (string, error) {
+func CreateJWT(secret []byte, userID int, role string) (string, error) {
 	err := godotenv.Load()
 	if err != nil {
 		return "", err
@@ -18,6 +18,7 @@ func CreateJWT(secret []byte, userID int) (string, error) {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"userID":    strconv.Itoa(userID),
+		"role":      role,
 		"expiredAt": time.Now().Add(expiration).Unix(),
 	})
 

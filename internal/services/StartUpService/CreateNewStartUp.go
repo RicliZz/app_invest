@@ -20,6 +20,18 @@ func NewStartUpService(repoStartUp repository.StartUpRepository) *StartUpService
 	}
 }
 
+// @BasePath /api/v1
+
+// @Summary createStartUp
+// @Description Создать новый стартап
+// @Tags StartUp
+// @Accept  json
+// @Produce  json
+// @Param body body startUpModel.StartUp  true  "Поля создания стартапа"
+// @Success 201 {string} string ""
+// @Failure 400 {string} string ""
+// @Security BearerAuth
+// @Router /startup/create [post]
 func (s *StartUpService) CreateNewStartUp(c *gin.Context) {
 	var payload startUpModel.StartUp
 	if err := c.ShouldBind(&payload); err != nil {
@@ -45,7 +57,6 @@ func (s *StartUpService) CreateNewStartUp(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{"message": "startUp created successfully"})
 			return
 		}
-
 		//добавить добавление поля userid
 
 	}
