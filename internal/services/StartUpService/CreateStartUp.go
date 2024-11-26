@@ -45,7 +45,6 @@ func (s *StartUpService) CreateStartUp(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{"message": "startUp created successfully"})
 			return
 		}
-		//добавить добавление поля userid
 
 	}
 
