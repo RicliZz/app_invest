@@ -30,7 +30,7 @@ func NewProfileService(repUser repository.UserRepository, repDetails repository.
 // @Router /profile/ [get]
 func (s *ProfileService) GetMyProfile(c *gin.Context) {
 
-	userId := Utils.GetUserFromContext(c)
+	userId, _ := Utils.GetUserFromContext(c)
 
 	user, err := s.repoUser.GetUserById(userId)
 	if err != nil {

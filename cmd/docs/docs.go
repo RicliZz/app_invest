@@ -15,6 +15,51 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/admin/all-users": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Найти юзер(а/ов) по фамилии(СДЕЛАТЬ ЕЩЁ ПО ПОЧТЕ,ИМЕНИ....)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "findUsers",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Фамилия",
+                        "name": "opt",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Найденный юзер",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/userModel.User"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/auth/sign-in": {
             "post": {
                 "description": "Вход в систему",
@@ -98,6 +143,52 @@ const docTemplate = `{
                 }
             }
         },
+        "/info/about-us": {
+            "get": {
+                "description": "Информация о нас",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Info"
+                ],
+                "summary": "about-us",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/info/contacts": {
+            "get": {
+                "description": "Контакты для связи",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Info"
+                ],
+                "summary": "contacts",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/profile/": {
             "get": {
                 "security": [
@@ -139,7 +230,7 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
-                "description": "Создать новый стартап",
+                "description": "Создание стартапа",
                 "consumes": [
                     "application/json"
                 ],
@@ -149,7 +240,18 @@ const docTemplate = `{
                 "tags": [
                     "StartUp"
                 ],
-                "summary": "createStartUp",
+                "summary": "create startup",
+                "parameters": [
+                    {
+                        "description": "Данные для создания стартапа",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/startUpModel.StartUp"
+                        }
+                    }
+                ],
                 "responses": {
                     "201": {
                         "description": "Created",
@@ -209,6 +311,174 @@ const docTemplate = `{
                 "password": {
                     "type": "string",
                     "minLength": 8
+                }
+            }
+        },
+        "enums.StartUpStage": {
+            "type": "integer",
+            "enum": [
+                0,
+                1,
+                2
+            ],
+            "x-enum-varnames": [
+                "IDEA",
+                "PROTOTYPE",
+                "PRODUCT"
+            ]
+        },
+        "enums.StartUpStatus": {
+            "type": "integer",
+            "enum": [
+                0,
+                1
+            ],
+            "x-enum-varnames": [
+                "CLOSE",
+                "ACTIVE"
+            ]
+        },
+        "enums.StartUpTopic": {
+            "type": "integer",
+            "enum": [
+                0,
+                1,
+                2
+            ],
+            "x-enum-varnames": [
+                "SPORT",
+                "TEACHING",
+                "CAR"
+            ]
+        },
+        "startUpModel.FounderSocials": {
+            "type": "object",
+            "properties": {
+                "instagramLink": {
+                    "type": "string"
+                },
+                "telegramLink": {
+                    "type": "string"
+                },
+                "vkLink": {
+                    "type": "string"
+                },
+                "website": {
+                    "type": "string"
+                },
+                "whatsUpLink": {
+                    "type": "string"
+                }
+            }
+        },
+        "startUpModel.StartUp": {
+            "type": "object",
+            "required": [
+                "fundingGoal",
+                "idea",
+                "offeredPercent",
+                "title",
+                "topic"
+            ],
+            "properties": {
+                "createdAt": {
+                    "description": "Информация о дате создания и апдейта",
+                    "type": "string"
+                },
+                "founderEmail": {
+                    "type": "string"
+                },
+                "founderFullName": {
+                    "description": "Информация о создателе",
+                    "type": "string"
+                },
+                "founderSocials": {
+                    "$ref": "#/definitions/startUpModel.FounderSocials"
+                },
+                "fundingGoal": {
+                    "description": "цель по финансированию, сколько нужно собрать",
+                    "type": "number"
+                },
+                "historyOfCreation": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "idea": {
+                    "type": "string"
+                },
+                "offeredPercent": {
+                    "description": "предлагаемый процент инвестору",
+                    "type": "number"
+                },
+                "stage": {
+                    "$ref": "#/definitions/enums.StartUpStage"
+                },
+                "status": {
+                    "$ref": "#/definitions/enums.StartUpStatus"
+                },
+                "strategy": {
+                    "type": "string"
+                },
+                "title": {
+                    "description": "Информация о стартапе",
+                    "type": "string"
+                },
+                "topic": {
+                    "$ref": "#/definitions/enums.StartUpTopic"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "userid": {
+                    "type": "integer"
+                }
+            }
+        },
+        "userModel.User": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "emailConfirm": {
+                    "type": "boolean"
+                },
+                "firstName": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "middleName": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "userDetails": {
+                    "$ref": "#/definitions/userModel.UserDetails"
+                }
+            }
+        },
+        "userModel.UserDetails": {
+            "type": "object",
+            "properties": {
+                "balance": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "userId": {
+                    "type": "integer"
                 }
             }
         }

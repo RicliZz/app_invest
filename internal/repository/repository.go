@@ -16,6 +16,7 @@ type UserRepository interface {
 	GetUserByEmail(email string) (*userModel.User, error)
 	SaveUpdates(user userModel.User) error
 	DeleteUser(userID int64) error
+	GetUsersByOpt(opt *string) (*[]userModel.User, error)
 }
 
 type UserDetailsRepository interface {

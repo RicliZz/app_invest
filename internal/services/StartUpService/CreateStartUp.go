@@ -4,6 +4,7 @@ import (
 	"fmt"
 	startUpModel "github.com/RicliZz/app_invest/internal/models/StartUp"
 	"github.com/RicliZz/app_invest/internal/repository"
+	"github.com/RicliZz/app_invest/pkg/Utils"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"log"
@@ -20,6 +21,18 @@ func NewStartUpService(repoStartUp repository.StartUpRepository) *StartUpService
 	}
 }
 
+// @BasePath /api/v1
+
+// @Summary create startup
+// @Description Создание стартапа
+// @Tags StartUp
+// @Accept  json
+// @Produce  json
+// @Param body body startUpModel.StartUp  true  "Данные для создания стартапа"
+// @Security BearerAuth
+// @Success 201 {string} string ""
+// @Failure 400 {string} string ""
+// @Router /startup/create [post]
 func (s *StartUpService) CreateStartUp(c *gin.Context) {
 	var payload startUpModel.StartUp
 	if err := c.ShouldBind(&payload); err != nil {
@@ -38,6 +51,8 @@ func (s *StartUpService) CreateStartUp(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprintf("title with that name already exists", payload.Title)})
 		return
 	} else {
+		userId, _ := Utils.GetUserFromContext(c)
+		payload.UserID = int(userId)
 		if err := s.repoStartUp.Create(payload); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
@@ -45,8 +60,6 @@ func (s *StartUpService) CreateStartUp(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{"message": "startUp created successfully"})
 			return
 		}
-
-		//добавить добавление поля userid
 
 	}
 

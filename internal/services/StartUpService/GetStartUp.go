@@ -7,7 +7,7 @@ import (
 )
 
 func (s *StartUpService) GetStartUp(c *gin.Context) {
-	startUpId := Utils.GetUserIDFromContext(c)
+	startUpId, _ := Utils.GetUserFromContext(c)
 
 	startUp, err := s.repoStartUp.GetStartUpById(startUpId)
 	if err != nil {
