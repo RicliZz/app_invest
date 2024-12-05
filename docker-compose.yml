@@ -1,0 +1,82 @@
+networks:
+  dev:
+
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: invest_app
+    depends_on:
+      - postgres
+      - redis
+      - elasticsearch
+    environment:
+      DB_HOST: postgres
+      DB_USER: postgres
+      DB_PASSWORD: ricliznedokyrill
+      DB_NAME: invest_db
+      REDIS_HOST: redis
+      REDIS_PASSWORD: ricliznedokyrill
+      ELASTICSEARCH_HOST: http://elasticsearch:9200
+    ports:
+      - "8080:8080"
+    command: [ "app" ]
+    networks:
+      - dev
+
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app
+    networks:
+      - dev
+
+  postgres:
+    image: postgres:latest
+    container_name: invest_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ricliznedokyrill
+      POSTGRES_DB: invest_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - dev
+
+
+  redis:
+    image: redis:latest
+    container_name: invest_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/var/lib/redis/data
+    command: [ "redis-server", "--requirepass", "ricliznedokyrill" ]
+    networks:
+      - dev
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.16.1
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - ELASTIC_PASSWORD=ricliznedokyrill
+    ports:
+      - "9200:9200"
+    volumes:
+      - es_data:/var/lib/elasticsearch/data
+    networks:
+      - dev
+
+volumes:
+  postgres_data:
+  redis_data:
+  es_data:

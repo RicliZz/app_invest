@@ -2,4 +2,3 @@
 .idea
 bin
 Makefile
-docker-compose.yml
