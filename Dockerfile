@@ -8,4 +8,4 @@ RUN go mod download && go mod verify
 COPY . .
 RUN go build -v -o /usr/local/bin/app .
 
-CMD ["app"]
+CMD ["/bin/invest_app"]
