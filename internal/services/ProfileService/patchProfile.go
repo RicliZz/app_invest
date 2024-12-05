@@ -8,7 +8,7 @@ import (
 )
 
 func (s *ProfileService) PatchProfile(c *gin.Context) {
-	userID := Utils.GetUserFromContext(c)
+	userID, _ := Utils.GetUserFromContext(c)
 
 	var updates requests.UpdateUserRequest
 

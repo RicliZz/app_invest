@@ -48,3 +48,24 @@ func (rep *UserRepositoryImpl) GetUserByEmail(email string) (*userModel.User, er
 
 	return &user, nil
 }
+
+func (rep *UserRepositoryImpl) GetUsersByOpt(opt *string) (*[]userModel.User, error) {
+	var users []userModel.User
+	if *opt == "" {
+		log.Println("opt is nil")
+		findedUsers := rep.db.Find(&users)
+		if findedUsers.Error != nil {
+			log.Println("Error with find users")
+			return nil, findedUsers.Error
+		}
+		return &users, nil
+	}
+
+	findedUsers := rep.db.Where("\"lastName\" LIKE ?", *opt).Find(&users)
+	if findedUsers.Error != nil {
+		log.Println("Error with find users")
+		return nil, findedUsers.Error
+	}
+
+	return &users, nil
+}

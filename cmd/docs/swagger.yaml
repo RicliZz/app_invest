@@ -30,12 +30,157 @@ definitions:
     - middleName
     - password
     type: object
+  enums.StartUpStage:
+    enum:
+    - 0
+    - 1
+    - 2
+    type: integer
+    x-enum-varnames:
+    - IDEA
+    - PROTOTYPE
+    - PRODUCT
+  enums.StartUpStatus:
+    enum:
+    - 0
+    - 1
+    type: integer
+    x-enum-varnames:
+    - CLOSE
+    - ACTIVE
+  enums.StartUpTopic:
+    enum:
+    - 0
+    - 1
+    - 2
+    type: integer
+    x-enum-varnames:
+    - SPORT
+    - TEACHING
+    - CAR
+  startUpModel.FounderSocials:
+    properties:
+      instagramLink:
+        type: string
+      telegramLink:
+        type: string
+      vkLink:
+        type: string
+      website:
+        type: string
+      whatsUpLink:
+        type: string
+    type: object
+  startUpModel.StartUp:
+    properties:
+      createdAt:
+        description: Информация о дате создания и апдейта
+        type: string
+      founderEmail:
+        type: string
+      founderFullName:
+        description: Информация о создателе
+        type: string
+      founderSocials:
+        $ref: '#/definitions/startUpModel.FounderSocials'
+      fundingGoal:
+        description: цель по финансированию, сколько нужно собрать
+        type: number
+      historyOfCreation:
+        type: string
+      id:
+        type: integer
+      idea:
+        type: string
+      offeredPercent:
+        description: предлагаемый процент инвестору
+        type: number
+      stage:
+        $ref: '#/definitions/enums.StartUpStage'
+      status:
+        $ref: '#/definitions/enums.StartUpStatus'
+      strategy:
+        type: string
+      title:
+        description: Информация о стартапе
+        type: string
+      topic:
+        $ref: '#/definitions/enums.StartUpTopic'
+      updatedAt:
+        type: string
+      userid:
+        type: integer
+    required:
+    - fundingGoal
+    - idea
+    - offeredPercent
+    - title
+    - topic
+    type: object
+  userModel.User:
+    properties:
+      email:
+        type: string
+      emailConfirm:
+        type: boolean
+      firstName:
+        type: string
+      id:
+        type: integer
+      lastName:
+        type: string
+      middleName:
+        type: string
+      password:
+        type: string
+      role:
+        type: string
+      userDetails:
+        $ref: '#/definitions/userModel.UserDetails'
+    type: object
+  userModel.UserDetails:
+    properties:
+      balance:
+        type: number
+      id:
+        type: integer
+      userId:
+        type: integer
+    type: object
 info:
   contact: {}
   description: This is a sample server for demonstrating JWT with Swagger.
   title: HaveIdea
   version: "1.0"
 paths:
+  /admin/all-users:
+    get:
+      consumes:
+      - application/json
+      description: Найти юзер(а/ов) по фамилии(СДЕЛАТЬ ЕЩЁ ПО ПОЧТЕ,ИМЕНИ....)
+      parameters:
+      - description: Фамилия
+        in: query
+        name: opt
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Найденный юзер
+          schema:
+            items:
+              $ref: '#/definitions/userModel.User'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: findUsers
+      tags:
+      - Admin
   /auth/sign-in:
     post:
       consumes:
@@ -90,6 +235,36 @@ paths:
       summary: sign-up
       tags:
       - Authorization
+  /info/about-us:
+    get:
+      consumes:
+      - application/json
+      description: Информация о нас
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: about-us
+      tags:
+      - Info
+  /info/contacts:
+    get:
+      consumes:
+      - application/json
+      description: Контакты для связи
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: contacts
+      tags:
+      - Info
   /profile/:
     get:
       consumes:
@@ -115,7 +290,14 @@ paths:
     post:
       consumes:
       - application/json
-      description: Создать новый стартап
+      description: Создание стартапа
+      parameters:
+      - description: Данные для создания стартапа
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/startUpModel.StartUp'
       produces:
       - application/json
       responses:
@@ -129,7 +311,7 @@ paths:
             type: string
       security:
       - BearerAuth: []
-      summary: createStartUp
+      summary: create startup
       tags:
       - StartUp
 securityDefinitions:

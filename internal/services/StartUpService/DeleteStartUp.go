@@ -8,7 +8,7 @@ import (
 )
 
 func (s *StartUpService) DeleteStartUp(c *gin.Context) {
-	startUpId := Utils.GetUserIDFromContext(c)
+	startUpId, _ := Utils.GetUserFromContext(c)
 
 	_, err := s.repoStartUp.GetStartUpById(startUpId)
 	if err != nil {

@@ -2,10 +2,14 @@ package Utils
 
 import "github.com/gin-gonic/gin"
 
-func GetUserIDFromContext(c *gin.Context) int64 {
+func GetUserFromContext(c *gin.Context) (int64, any) {
 	userID, isExist := c.Get("userID")
 	if !isExist {
-		return 0
+		return 0, ""
 	}
-	return userID.(int64)
+	role, isExist := c.Get("role")
+	if !isExist {
+		return 0, ""
+	}
+	return userID.(int64), role
 }

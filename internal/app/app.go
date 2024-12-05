@@ -4,7 +4,9 @@ import (
 	"fmt"
 	docs "github.com/RicliZz/app_invest/cmd/docs"
 	"github.com/RicliZz/app_invest/config"
+	"github.com/RicliZz/app_invest/internal/handlers/adminHandler"
 	"github.com/RicliZz/app_invest/internal/handlers/authHandler"
+	"github.com/RicliZz/app_invest/internal/handlers/infoHandler"
 	"github.com/RicliZz/app_invest/internal/handlers/profileHandler"
 	"github.com/RicliZz/app_invest/internal/handlers/startUpHandler"
 	"github.com/RicliZz/app_invest/internal/repository/AuthRepository"
@@ -12,7 +14,9 @@ import (
 	"github.com/RicliZz/app_invest/internal/repository/UserDetailsRepository"
 	"github.com/RicliZz/app_invest/internal/repository/UserRepository"
 	"github.com/RicliZz/app_invest/internal/server"
+	"github.com/RicliZz/app_invest/internal/services/AdminService"
 	"github.com/RicliZz/app_invest/internal/services/AuthService"
+	"github.com/RicliZz/app_invest/internal/services/InfoService"
 	profileService "github.com/RicliZz/app_invest/internal/services/ProfileService"
 	"github.com/RicliZz/app_invest/internal/services/StartUpService"
 	"github.com/gin-gonic/gin"
@@ -45,6 +49,8 @@ func Run(configpath string) {
 	}
 	log.Println("Successfully connected to the database")
 
+	//ES
+	
 	//redis
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     "localhost:6379",
@@ -60,14 +66,18 @@ func Run(configpath string) {
 	startUpRepo := StartUpRepository.NewStartUpRepository(db)
 
 	//SERVICES
+	infoServ := InfoService.NewInfoService()
 	authServ := authService.NewAuthService(authRepo, userRepo, userDetailsRepo, rdb)
 	profileServ := profileService.NewProfileService(userRepo, userDetailsRepo)
 	startUpServ := StartUpService.NewStartUpService(startUpRepo)
+	adminServ := AdminService.NewAdminService(userRepo)
 
 	//HANDLERS
+	infoHand := infoHandler.NewInfoHandler(infoServ)
 	authHand := authHandler.NewAuthHandler(authServ)
 	profileHand := profileHandler.NewProfileHandler(profileServ)
 	startUpHand := startUpHandler.NewStartUpHandler(startUpServ)
+	adminHand := adminHandler.NewAdminHandler(adminServ)
 
 	//SWAG AND DEFAULT_ROUTER
 	router := gin.Default()
@@ -76,9 +86,11 @@ func Run(configpath string) {
 	api := router.Group("/api/v1/")
 
 	//REGISTER_ROUTES
+	adminHand.RegisterRoutes(api)
 	authHand.RegisterRoutes(api)
 	profileHand.RegisterRoutes(api)
 	startUpHand.RegisterRoutes(api)
+	infoHand.RegisterRoutes(api)
 
 	srv := server.NewAPIServer(cfg, router)
 	log.Println("Server success running")

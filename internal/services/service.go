@@ -23,3 +23,12 @@ type StartUpServiceInterface interface {
 	GetStartUp(ctx *gin.Context)
 	GetAllStartUps(ctx *gin.Context)
 }
+
+type InfoServiceInterface interface {
+	GetInfo(c *gin.Context)
+	GetContact(c *gin.Context)
+}
+
+type AdminServiceInterface interface {
+	AdminGetUser(c *gin.Context)
+}
