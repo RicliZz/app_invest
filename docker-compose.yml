@@ -3,7 +3,7 @@ networks:
 
 
 services:
-  app:
+  invest_app:
     build:
       context: .
       dockerfile: Dockerfile
