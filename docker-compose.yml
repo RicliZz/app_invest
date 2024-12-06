@@ -22,7 +22,7 @@ services:
       ELASTICSEARCH_HOST: http://elasticsearch:9200
     ports:
       - "8080:8080"
-    command: [ "app" ]
+    command: [ "/usr/src/app/bin/invest_app" ]
     networks:
       - dev
 
