@@ -13,16 +13,16 @@ services:
       - redis
       - elasticsearch
     environment:
-      DB_HOST: postgres
+      DB_HOST: invest_postgres
       DB_USER: postgres
       DB_PASSWORD: ricliznedokyrill
       DB_NAME: invest_db
-      REDIS_HOST: redis
+      REDIS_HOST: invest_redis
       REDIS_PASSWORD: ricliznedokyrill
       ELASTICSEARCH_HOST: http://elasticsearch:9200
     ports:
       - "8080:8080"
-    command: [ "/usr/src/app/bin/invest_app" ]
+    command: ["sh", "-c", "until pg_isready -h invest_postgres -U postgres; do echo waiting for postgres; sleep 2; done; /usr/src/app/bin/invest_app"]
     networks:
       - dev
 
@@ -64,11 +64,13 @@ services:
       - dev
 
   elasticsearch:
+    mem_limit: 4g
     image: docker.elastic.co/elasticsearch/elasticsearch:8.16.1
     container_name: elasticsearch
     environment:
       - discovery.type=single-node
-      - ELASTIC_PASSWORD=ricliznedokyrill
+      - xpack.security.enabled=true
+      - ES_JAVA_OPTS=-Xms2g -Xmx2g
     ports:
       - "9200:9200"
     volumes:
