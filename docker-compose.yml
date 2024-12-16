@@ -22,7 +22,7 @@ services:
       ELASTICSEARCH_HOST: http://elasticsearch:9200
     ports:
       - "8080:8080"
-    command: ["sh", "-c", "until pg_isready -h invest_postgres -U postgres; do echo waiting for postgres; sleep 2; done; /usr/src/app/bin/invest_app"]
+    command: ["sh", "-c", "until nc -z invest_postgres 5432; do echo waiting for postgres; sleep 2; done; /usr/src/app/bin/invest_app"]
     networks:
       - dev
 
