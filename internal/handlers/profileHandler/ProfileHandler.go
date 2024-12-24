@@ -18,8 +18,8 @@ func (h *ProfileHandler) RegisterRoutes(router *gin.RouterGroup) {
 	profileRouter := router.Group("/profile")
 	profileRouter.Use(Utils.AuthMiddleware())
 	{
-		profileRouter.GET("/", h.service.GetMyProfile)
-		profileRouter.GET("/statistic", h.service.GetMyProfile)
+		profileRouter.GET("/:id", h.service.GetProfile)
+		profileRouter.GET("/statistic", h.service.GetProfile)
 		profileRouter.PATCH("/update", h.service.PatchProfile)
 		profileRouter.DELETE("/delete", h.service.DeleteProfile)
 	}

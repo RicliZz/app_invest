@@ -281,14 +281,14 @@ const docTemplate = `{
                 }
             }
         },
-        "/profile/": {
+        "/profile/{id}": {
             "get": {
                 "security": [
                     {
                         "BearerAuth": []
                     }
                 ],
-                "description": "Посмотреть СВОЙ профиль",
+                "description": "Посмотреть профиль",
                 "consumes": [
                     "application/json"
                 ],
@@ -299,15 +299,24 @@ const docTemplate = `{
                     "Profile"
                 ],
                 "summary": "getProfile",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID пользователя",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
-                    "201": {
-                        "description": "Created",
+                    "200": {
+                        "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/responses.UserResponse"
                         }
                     },
                     "400": {
-                        "description": "Bad Request",
+                        "description": "Need int ID",
                         "schema": {
                             "type": "string"
                         }
@@ -458,6 +467,37 @@ const docTemplate = `{
                 "CAR"
             ]
         },
+        "responses.UserDetailsResponse": {
+            "type": "object",
+            "properties": {
+                "balance": {
+                    "type": "number"
+                }
+            }
+        },
+        "responses.UserResponse": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "middleName": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "userDetails": {
+                    "$ref": "#/definitions/responses.UserDetailsResponse"
+                }
+            }
+        },
         "startUpModel.FounderSocials": {
             "type": "object",
             "properties": {
@@ -546,6 +586,9 @@ const docTemplate = `{
         "userModel.User": {
             "type": "object",
             "properties": {
+                "aboutMe": {
+                    "type": "string"
+                },
                 "confirmed": {
                     "type": "boolean"
                 },

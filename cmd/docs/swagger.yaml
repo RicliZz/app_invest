@@ -69,6 +69,26 @@ definitions:
     - SPORT
     - TEACHING
     - CAR
+  responses.UserDetailsResponse:
+    properties:
+      balance:
+        type: number
+    type: object
+  responses.UserResponse:
+    properties:
+      email:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      middleName:
+        type: string
+      password:
+        type: string
+      userDetails:
+        $ref: '#/definitions/responses.UserDetailsResponse'
+    type: object
   startUpModel.FounderSocials:
     properties:
       instagramLink:
@@ -130,6 +150,8 @@ definitions:
     type: object
   userModel.User:
     properties:
+      aboutMe:
+        type: string
       confirmed:
         type: boolean
       email:
@@ -340,20 +362,26 @@ paths:
       summary: contacts
       tags:
       - Info
-  /profile/:
+  /profile/{id}:
     get:
       consumes:
       - application/json
-      description: Посмотреть СВОЙ профиль
+      description: Посмотреть профиль
+      parameters:
+      - description: ID пользователя
+        in: path
+        name: id
+        required: true
+        type: integer
       produces:
       - application/json
       responses:
-        "201":
-          description: Created
+        "200":
+          description: OK
           schema:
-            type: string
+            $ref: '#/definitions/responses.UserResponse'
         "400":
-          description: Bad Request
+          description: Need int ID
           schema:
             type: string
       security:

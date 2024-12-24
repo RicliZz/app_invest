@@ -8,6 +8,7 @@ type User struct {
 	LastName     string                 `gorm:"column:lastName"          json:"lastName"`
 	MiddleName   string                 `gorm:"column:middleName"        json:"middleName"`
 	Email        string                 `gorm:"column:email"             json:"email"`
+	AboutMe      string                 `gorm:"column:aboutMe"           json:"aboutMe"`
 	Role         string                 `json:"role" gorm:"default:user" gorm:"omitempty"`
 	EmailConfirm bool                   `gorm:"column:emailConfirm"      json:"emailConfirm"`
 	Password     string                 `gorm:"column:password"          json:"password"`
