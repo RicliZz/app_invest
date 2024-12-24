@@ -18,6 +18,9 @@ func (h *AdminHandler) RegisterRoutes(router *gin.RouterGroup) {
 	auth := router.Group("/admin")
 	auth.Use(Utils.AdminOnlyMiddleware())
 	{
-		auth.GET("/all-users", h.service.AdminGetUser)
+		auth.POST("/search-one/:id", h.service.SearchOneUser)
+		auth.POST("/get-all", h.service.SearchAllUsers)
+		auth.POST("/as-user/:id", h.service.LoginAsAnotherUser)
+
 	}
 }

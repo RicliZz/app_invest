@@ -1,0 +1,2 @@
+ALTER TABLE users
+ALTER COLUMN "middleName" TYPE VARCHAR(50);

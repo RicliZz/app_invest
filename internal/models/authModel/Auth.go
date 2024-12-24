@@ -9,8 +9,8 @@ type RequestSignUpPayload struct {
 }
 
 type RequestSignInPayload struct {
-	Email    string `json:"email"    validate:"required,email"`
-	Password string `json:"password" validate:"required,min=8"`
+	Email    string `json:"email"    validate:"required,email"  example:"admin@mail.ru"`
+	Password string `json:"password" validate:"required,min=8"  example:"12345678"`
 }
 
 type ResponseSignInPayload struct {

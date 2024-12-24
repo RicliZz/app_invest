@@ -48,6 +48,6 @@ func (s *ProfileService) GetMyProfile(c *gin.Context) {
 		LastName:    user.LastName,
 		MiddleName:  user.MiddleName,
 		Email:       user.Email,
-		UserDetails: *userDetails,
+		UserDetails: userDetails,
 	})
 }

@@ -30,5 +30,7 @@ type InfoServiceInterface interface {
 }
 
 type AdminServiceInterface interface {
-	AdminGetUser(c *gin.Context)
+	SearchOneUser(c *gin.Context)
+	SearchAllUsers(c *gin.Context)
+	LoginAsAnotherUser(c *gin.Context)
 }

@@ -48,13 +48,11 @@ func (s *AuthService) SignIn(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{})
 		return
 	}
-
 	if !Utils.ComparePasswords(checkUser.Password, []byte(payload.Password)) {
 		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{})
 		return
 	}
-
 	err = godotenv.Load()
 	if err != nil {
 		log.Println(err)

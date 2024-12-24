@@ -9,6 +9,7 @@ import (
 	"github.com/RicliZz/app_invest/internal/handlers/infoHandler"
 	"github.com/RicliZz/app_invest/internal/handlers/profileHandler"
 	"github.com/RicliZz/app_invest/internal/handlers/startUpHandler"
+	"github.com/RicliZz/app_invest/internal/repository/AdminRepository"
 	"github.com/RicliZz/app_invest/internal/repository/AuthRepository"
 	"github.com/RicliZz/app_invest/internal/repository/StartUpRepository"
 	"github.com/RicliZz/app_invest/internal/repository/UserDetailsRepository"
@@ -50,10 +51,10 @@ func Run(configpath string) {
 	log.Println("Successfully connected to the database")
 
 	//ES
-	
+
 	//redis
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
+		Addr:     "92.246.141.141:6379",
 		Password: "ricliznedokyrill",
 		DB:       0,
 	})
@@ -64,13 +65,14 @@ func Run(configpath string) {
 	userRepo := UserRepository.NewUserRepositoryImpl(db)
 	userDetailsRepo := UserDetailsRepository.NewUserDetailsRepositoryImpl(db)
 	startUpRepo := StartUpRepository.NewStartUpRepository(db)
+	adminRepo := AdminRepository.NewAdminRepository(db)
 
 	//SERVICES
 	infoServ := InfoService.NewInfoService()
 	authServ := authService.NewAuthService(authRepo, userRepo, userDetailsRepo, rdb)
 	profileServ := profileService.NewProfileService(userRepo, userDetailsRepo)
 	startUpServ := StartUpService.NewStartUpService(startUpRepo)
-	adminServ := AdminService.NewAdminService(userRepo)
+	adminServ := AdminService.NewAdminService(adminRepo)
 
 	//HANDLERS
 	infoHand := infoHandler.NewInfoHandler(infoServ)

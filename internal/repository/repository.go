@@ -32,3 +32,9 @@ type StartUpRepository interface {
 	GetStartUpById(startUpId int64) (*startUpModel.StartUp, error)
 	GetAllStartUps() ([]startUpModel.StartUp, error) //в дальнейшем добавить на вход фильтр и пагинацию
 }
+
+type AdminRepository interface {
+	GetUserById(userId int64) (*userModel.User, error)
+	GetUsersWithStartups() ([]userModel.User, error)
+	GetUsersNotConfirmed() ([]userModel.User, error)
+}

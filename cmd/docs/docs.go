@@ -15,14 +15,14 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/admin/all-users": {
-            "get": {
+        "/admin/as-user/{id}": {
+            "post": {
                 "security": [
                     {
                         "BearerAuth": []
                     }
                 ],
-                "description": "Найти юзер(а/ов) по фамилии(СДЕЛАТЬ ЕЩЁ ПО ПОЧТЕ,ИМЕНИ....)",
+                "description": "Только админ",
                 "consumes": [
                     "application/json"
                 ],
@@ -32,18 +32,67 @@ const docTemplate = `{
                 "tags": [
                     "Admin"
                 ],
-                "summary": "findUsers",
+                "summary": "Зайти под пользователем",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "Фамилия",
-                        "name": "opt",
-                        "in": "query"
+                        "type": "integer",
+                        "description": "ID пользователя, под которым надо войти",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Найденный юзер",
+                        "description": "JWT токен",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Неверные параметры",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/get-all": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "ФИО/Название стартапа",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Найти всех пользователей по параметрам",
+                "parameters": [
+                    {
+                        "description": "Параметры поиска",
+                        "name": "searchParams",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AdminService.SearchParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Найденные пользователи",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -52,7 +101,50 @@ const docTemplate = `{
                         }
                     },
                     "400": {
-                        "description": "Bad Request",
+                        "description": "Неверные параметры",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/search-one/{id}": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Найти пользователя по ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID пользователя",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Найденный юзер",
+                        "schema": {
+                            "$ref": "#/definitions/userModel.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Пользователь по ID не найден",
                         "schema": {
                             "type": "string"
                         }
@@ -270,6 +362,19 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "AdminService.SearchParams": {
+            "type": "object",
+            "properties": {
+                "HaveStartups": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "NotConfirmed": {
+                    "type": "boolean",
+                    "example": false
+                }
+            }
+        },
         "authModel.RequestSignInPayload": {
             "type": "object",
             "required": [
@@ -278,11 +383,13 @@ const docTemplate = `{
             ],
             "properties": {
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "admin@mail.ru"
                 },
                 "password": {
                     "type": "string",
-                    "minLength": 8
+                    "minLength": 8,
+                    "example": "12345678"
                 }
             }
         },
@@ -439,6 +546,9 @@ const docTemplate = `{
         "userModel.User": {
             "type": "object",
             "properties": {
+                "confirmed": {
+                    "type": "boolean"
+                },
                 "email": {
                     "type": "string"
                 },
@@ -462,6 +572,12 @@ const docTemplate = `{
                 },
                 "role": {
                     "type": "string"
+                },
+                "startUps": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/startUpModel.StartUp"
+                    }
                 },
                 "userDetails": {
                     "$ref": "#/definitions/userModel.UserDetails"

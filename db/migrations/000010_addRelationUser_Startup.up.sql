@@ -1,0 +1,2 @@
+ALTER TABLE startup
+ADD CONSTRAINT fk_user_startup FOREIGN KEY (userid) REFERENCES users(id) ON DELETE CASCADE;
