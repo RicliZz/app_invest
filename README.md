@@ -1,17 +1,25 @@
 
 # ***Hello Dear Friend, its HaveIdea!***
 
+## documentation
+### `localhost:8080/swagger/index.html`
+
+---
 ## run
-### `go run cmd/main.go`
+### `make run`
 
+---
 ## migration create
-### `migrate create -ext sql -dir db/migrations -seq ${<migration_name>}`
+### `make new_migrate <migration_name>`
 
+---
 ## migration up
-### `migrate -database "postgres://postgres:<pg_password>@localhost:5432/invest_db?sslmode=disable" -path db/migrations up`
+### `make migrate-up`
 
+---
 ## migration down
-### `migrate -database "postgres://postgres:<pg_password>@localhost:5432/invest_db?sslmode=disable" -path db/migrations down`
+### `make migrate-down`
 
+---
 ## see jwt secret
-### `printf "\nJWT_SECRET=\"$(shell openssl rand -base64 32)\"\n" >> .env`
+### `make jwt_secret`
