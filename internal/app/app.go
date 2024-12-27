@@ -20,6 +20,7 @@ import (
 	"github.com/RicliZz/app_invest/internal/services/InfoService"
 	profileService "github.com/RicliZz/app_invest/internal/services/ProfileService"
 	"github.com/RicliZz/app_invest/internal/services/StartUpService"
+	"github.com/elastic/go-elasticsearch/v8"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/redis/go-redis/v9"
@@ -51,6 +52,21 @@ func Run(configpath string) {
 	log.Println("Successfully connected to the database")
 
 	//ES
+	cfgElastic := elasticsearch.Config{
+		Addresses: []string{"http://92.246.141.141:9200"},
+		Username:  "elastic",
+		Password:  "_w4r2jPq93Uniw_z-8s_",
+	}
+	esClient, err := elasticsearch.NewClient(cfgElastic)
+	if err != nil {
+		log.Fatalf("failed to create an elastic client: %v", err)
+	}
+	res, err := esClient.Info()
+	if err != nil {
+		log.Fatalf("Error getting response: %s", err)
+	}
+	defer res.Body.Close()
+	log.Println("Response status:", res.Status)
 
 	//redis
 	rdb := redis.NewClient(&redis.Options{

@@ -17,3 +17,15 @@ func (s *StartUpService) GetStartUp(c *gin.Context) {
 
 	c.JSON(http.StatusOK, startUp)
 }
+
+func (s *StartUpService) GetPendingStartUps(c *gin.Context) {
+
+	pendingStartups, err := s.repoStartUp.GetStartUpsWithPending()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
+		return
+	}
+
+	c.JSON(http.StatusOK, pendingStartups)
+
+}

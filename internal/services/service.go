@@ -22,6 +22,7 @@ type StartUpServiceInterface interface {
 	UpdateStartUp(ctx *gin.Context)
 	GetStartUp(ctx *gin.Context)
 	GetAllStartUps(ctx *gin.Context)
+	GetPendingStartUps(ctx *gin.Context)
 }
 
 type InfoServiceInterface interface {

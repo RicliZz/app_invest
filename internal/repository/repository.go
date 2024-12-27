@@ -31,6 +31,7 @@ type StartUpRepository interface {
 	Update(startUpId int64, payload startUpModel.StartUp) error
 	GetStartUpById(startUpId int64) (*startUpModel.StartUp, error)
 	GetAllStartUps() ([]startUpModel.StartUp, error) //в дальнейшем добавить на вход фильтр и пагинацию
+	GetStartUpsWithPending() ([]startUpModel.StartUp, error)
 }
 
 type AdminRepository interface {

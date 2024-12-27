@@ -33,5 +33,7 @@ func (h *StartUpHandler) RegisterRoutes(router *gin.RouterGroup) {
 		startUpRouter.GET("/search-all", h.service.GetAllStartUps)
 
 		startUpRouter.POST("/create", h.service.CreateStartUp)
+
+		startUpRouter.Use(Utils.AdminOnlyMiddleware()).GET("/pending", h.service.GetPendingStartUps)
 	}
 }

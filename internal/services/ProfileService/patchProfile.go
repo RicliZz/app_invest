@@ -34,6 +34,13 @@ func (s *ProfileService) PatchProfile(c *gin.Context) {
 	if updates.Email != nil {
 		user.Email = *updates.Email
 	}
+
+	if updates.NewPassword != nil {
+		if Utils.ComparePasswords(user.Password, []byte(*updates.OldPassword)) {
+			user.Password = *updates.NewPassword
+		}
+	}
+
 	err = s.repoUser.SaveUpdates(*user)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

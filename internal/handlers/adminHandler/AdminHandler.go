@@ -15,12 +15,12 @@ func NewAdminHandler(service services.AdminServiceInterface) *AdminHandler {
 }
 
 func (h *AdminHandler) RegisterRoutes(router *gin.RouterGroup) {
-	auth := router.Group("/admin")
-	auth.Use(Utils.AdminOnlyMiddleware())
+	admin := router.Group("/admin")
+	admin.Use(Utils.AdminOnlyMiddleware())
 	{
-		auth.POST("/search-one/:id", h.service.SearchOneUser)
-		auth.POST("/get-all", h.service.SearchAllUsers)
-		auth.POST("/as-user/:id", h.service.LoginAsAnotherUser)
+		admin.POST("/search-one/:id", h.service.SearchOneUser)
+		admin.POST("/get-all", h.service.SearchAllUsers)
+		admin.POST("/as-user/:id", h.service.LoginAsAnotherUser)
 
 	}
 }

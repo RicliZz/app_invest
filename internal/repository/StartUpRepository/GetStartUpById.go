@@ -12,3 +12,11 @@ func (rep *StartUpRepositoryImpl) GetStartUpById(startUpId int64) (*startUpModel
 	}
 	return &startup, nil
 }
+
+func (rep *StartUpRepositoryImpl) GetStartUpsWithPending() ([]startUpModel.StartUp, error) {
+	var startups []startUpModel.StartUp
+	if err := rep.db.Where("pending = ?", true).Find(&startups).Error; err != nil {
+		return nil, fmt.Errorf("startup not found")
+	}
+	return startups, nil
+}
