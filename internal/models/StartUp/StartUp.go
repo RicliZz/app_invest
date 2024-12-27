@@ -15,10 +15,10 @@ type StartUp struct {
 	//Информация о стартапе
 	Title             string              `gorm:"column:title"             json:"title" validate:"required"`
 	Topic             enums.StartUpTopic  `gorm:"column:topic"             json:"topic" validate:"required"`
-	Idea              string              `gorm:"column:idea"              json:"idea" validate:"required"`
+	Idea              string              `gorm:"column:idea"              json:"idea"`
 	Strategy          string              `gorm:"column:strategy"          json:"strategy"`
 	HistoryOfCreation string              `gorm:"column:historyofcreation" json:"historyOfCreation"`
-	Status            enums.StartUpStatus `gorm:"column:status"            json:"status"`
+	Status            enums.StartUpStatus `gorm:"column:status"            json:"status" validate:"required"`
 	Stage             enums.StartUpStage  `gorm:"column:stage"             json:"stage"`
 	//цель по финансированию, сколько нужно собрать
 	FundingGoal float64 `gorm:"column:fundinggoal"       json:"fundingGoal" validate:"required"`
