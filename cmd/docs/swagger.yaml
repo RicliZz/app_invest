@@ -69,7 +69,7 @@ definitions:
     - SPORT
     - TEACHING
     - CAR
-  requests.UpdateStartupRequest:
+  requests.StartupRequest:
     properties:
       fundingGoal:
         description: required
@@ -84,18 +84,14 @@ definitions:
       stage:
         $ref: '#/definitions/enums.StartUpStage'
       status:
-        allOf:
-        - $ref: '#/definitions/enums.StartUpStatus'
-        description: required
+        $ref: '#/definitions/enums.StartUpStatus'
       strategy:
         type: string
       title:
         description: required
         type: string
       topic:
-        allOf:
-        - $ref: '#/definitions/enums.StartUpTopic'
-        description: required
+        $ref: '#/definitions/enums.StartUpTopic'
     type: object
   requests.UpdateUserRequest:
     properties:
@@ -574,7 +570,7 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/requests.UpdateStartupRequest'
+          $ref: '#/definitions/requests.StartupRequest'
       produces:
       - application/json
       responses:

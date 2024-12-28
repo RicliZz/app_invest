@@ -635,7 +635,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/requests.UpdateStartupRequest"
+                            "$ref": "#/definitions/requests.StartupRequest"
                         }
                     }
                 ],
@@ -753,7 +753,7 @@
                 "CAR"
             ]
         },
-        "requests.UpdateStartupRequest": {
+        "requests.StartupRequest": {
             "type": "object",
             "properties": {
                 "fundingGoal": {
@@ -774,12 +774,7 @@
                     "$ref": "#/definitions/enums.StartUpStage"
                 },
                 "status": {
-                    "description": "required",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/enums.StartUpStatus"
-                        }
-                    ]
+                    "$ref": "#/definitions/enums.StartUpStatus"
                 },
                 "strategy": {
                     "type": "string"
@@ -789,12 +784,7 @@
                     "type": "string"
                 },
                 "topic": {
-                    "description": "required",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/enums.StartUpTopic"
-                        }
-                    ]
+                    "$ref": "#/definitions/enums.StartUpTopic"
                 }
             }
         },

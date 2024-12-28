@@ -643,7 +643,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/requests.UpdateStartupRequest"
+                            "$ref": "#/definitions/requests.StartupRequest"
                         }
                     }
                 ],
@@ -761,7 +761,7 @@ const docTemplate = `{
                 "CAR"
             ]
         },
-        "requests.UpdateStartupRequest": {
+        "requests.StartupRequest": {
             "type": "object",
             "properties": {
                 "fundingGoal": {
@@ -782,12 +782,7 @@ const docTemplate = `{
                     "$ref": "#/definitions/enums.StartUpStage"
                 },
                 "status": {
-                    "description": "required",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/enums.StartUpStatus"
-                        }
-                    ]
+                    "$ref": "#/definitions/enums.StartUpStatus"
                 },
                 "strategy": {
                     "type": "string"
@@ -797,12 +792,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "topic": {
-                    "description": "required",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/enums.StartUpTopic"
-                        }
-                    ]
+                    "$ref": "#/definitions/enums.StartUpTopic"
                 }
             }
         },

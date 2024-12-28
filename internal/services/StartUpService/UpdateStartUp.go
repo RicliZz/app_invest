@@ -4,6 +4,7 @@ import (
 	"github.com/RicliZz/app_invest/internal/models/requests"
 	"github.com/RicliZz/app_invest/pkg/Utils"
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/copier"
 	"net/http"
 )
 
@@ -15,7 +16,7 @@ import (
 // @Accept  json
 // @Produce  json
 // @Param id path int true "ID стартапа"
-// @Param body body requests.UpdateStartupRequest true  "Данные для обновления стартапа"
+// @Param body body requests.StartupRequest true  "Данные для обновления стартапа"
 // @Security BearerAuth
 // @Success 201 {string} string ""
 // @Failure 400 {string} string ""
@@ -36,22 +37,17 @@ func (s *StartUpService) UpdateStartUp(c *gin.Context) {
 		return
 	}
 
-	if payload.Title == nil || payload.Topic == nil || payload.Status == nil ||
-		payload.FundingGoal == nil || payload.OfferedPercent == nil {
-
+	if (payload.Title != nil && *payload.Title == "") || (payload.FundingGoal != nil && *payload.FundingGoal == 0) ||
+		(payload.OfferedPercent != nil && *payload.OfferedPercent == 0) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid payload, no mandatory fields"})
 		return
 	}
 
-	updatedStartup.Title = *payload.Title
-	updatedStartup.Topic = *payload.Topic
-	updatedStartup.Idea = *payload.Idea
-	updatedStartup.Strategy = *payload.Strategy
-	updatedStartup.HistoryOfCreation = *payload.HistoryOfCreation
-	updatedStartup.Status = *payload.Status
-	updatedStartup.Stage = *payload.Stage
-	updatedStartup.FundingGoal = *payload.FundingGoal
-	updatedStartup.OfferedPercent = *payload.OfferedPercent
+	//копирование данных из реквеста в основную структуру без ниловских полей
+	err = copier.CopyWithOption(updatedStartup, payload, copier.Option{IgnoreEmpty: true})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
 
 	err = s.repoStartUp.Update(*updatedStartup)
 	if err != nil {
