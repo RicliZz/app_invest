@@ -19,7 +19,7 @@ import (
 // @Failure 400 {string} string ""
 // @Router /startup/{id}/ [get]
 func (s *StartUpService) GetStartUp(c *gin.Context) {
-	startUpId, _ := Utils.GetUserFromContext(c)
+	startUpId := Utils.GetIDFromContext(c)
 
 	startUp, err := s.repoStartUp.GetStartUpById(startUpId)
 	if err != nil {

@@ -471,7 +471,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/startUpModel.StartUp"
+                            "$ref": "#/definitions/requests.StartupRequest"
                         }
                     }
                 ],
@@ -929,6 +929,26 @@ const docTemplate = `{
                 }
             }
         },
+        "userModel.FounderSocials": {
+            "type": "object",
+            "properties": {
+                "instagramLink": {
+                    "type": "string"
+                },
+                "telegramLink": {
+                    "type": "string"
+                },
+                "vkLink": {
+                    "type": "string"
+                },
+                "website": {
+                    "type": "string"
+                },
+                "whatsUpLink": {
+                    "type": "string"
+                }
+            }
+        },
         "userModel.User": {
             "type": "object",
             "properties": {
@@ -961,6 +981,9 @@ const docTemplate = `{
                 },
                 "role": {
                     "type": "string"
+                },
+                "socials": {
+                    "$ref": "#/definitions/userModel.FounderSocials"
                 },
                 "startUps": {
                     "type": "array",

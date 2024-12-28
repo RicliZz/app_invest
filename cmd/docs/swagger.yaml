@@ -183,6 +183,19 @@ definitions:
     - title
     - topic
     type: object
+  userModel.FounderSocials:
+    properties:
+      instagramLink:
+        type: string
+      telegramLink:
+        type: string
+      vkLink:
+        type: string
+      website:
+        type: string
+      whatsUpLink:
+        type: string
+    type: object
   userModel.User:
     properties:
       aboutMe:
@@ -205,6 +218,8 @@ definitions:
         type: string
       role:
         type: string
+      socials:
+        $ref: '#/definitions/userModel.FounderSocials'
       startUps:
         items:
           $ref: '#/definitions/startUpModel.StartUp'
@@ -598,7 +613,7 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/startUpModel.StartUp'
+          $ref: '#/definitions/requests.StartupRequest'
       produces:
       - application/json
       responses:

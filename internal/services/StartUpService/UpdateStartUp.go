@@ -47,6 +47,7 @@ func (s *StartUpService) UpdateStartUp(c *gin.Context) {
 	err = copier.CopyWithOption(updatedStartup, payload, copier.Option{IgnoreEmpty: true})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
 	}
 
 	err = s.repoStartUp.Update(*updatedStartup)

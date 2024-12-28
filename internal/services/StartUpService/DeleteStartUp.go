@@ -20,7 +20,7 @@ import (
 // @Failure 400 {string} string ""
 // @Router /startup/{id}/delete [delete]
 func (s *StartUpService) DeleteStartUp(c *gin.Context) {
-	startUpId, _ := Utils.GetUserFromContext(c)
+	startUpId := Utils.GetIDFromContext(c)
 
 	_, err := s.repoStartUp.GetStartUpById(startUpId)
 	if err != nil {

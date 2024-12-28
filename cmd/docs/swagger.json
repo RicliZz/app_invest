@@ -463,7 +463,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/startUpModel.StartUp"
+                            "$ref": "#/definitions/requests.StartupRequest"
                         }
                     }
                 ],
@@ -921,6 +921,26 @@
                 }
             }
         },
+        "userModel.FounderSocials": {
+            "type": "object",
+            "properties": {
+                "instagramLink": {
+                    "type": "string"
+                },
+                "telegramLink": {
+                    "type": "string"
+                },
+                "vkLink": {
+                    "type": "string"
+                },
+                "website": {
+                    "type": "string"
+                },
+                "whatsUpLink": {
+                    "type": "string"
+                }
+            }
+        },
         "userModel.User": {
             "type": "object",
             "properties": {
@@ -953,6 +973,9 @@
                 },
                 "role": {
                     "type": "string"
+                },
+                "socials": {
+                    "$ref": "#/definitions/userModel.FounderSocials"
                 },
                 "startUps": {
                     "type": "array",
