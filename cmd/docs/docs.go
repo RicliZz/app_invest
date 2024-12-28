@@ -368,6 +368,58 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/startup/{id}/update": {
+            "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Обновление стартапа",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "StartUp"
+                ],
+                "summary": "update startup",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID стартапа",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Данные для создания стартапа",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/requests.UpdateStartupRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -467,6 +519,51 @@ const docTemplate = `{
                 "CAR"
             ]
         },
+        "requests.UpdateStartupRequest": {
+            "type": "object",
+            "properties": {
+                "fundingGoal": {
+                    "description": "required",
+                    "type": "number"
+                },
+                "historyOfCreation": {
+                    "type": "string"
+                },
+                "idea": {
+                    "type": "string"
+                },
+                "offeredPercent": {
+                    "description": "required",
+                    "type": "number"
+                },
+                "stage": {
+                    "$ref": "#/definitions/enums.StartUpStage"
+                },
+                "status": {
+                    "description": "required",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/enums.StartUpStatus"
+                        }
+                    ]
+                },
+                "strategy": {
+                    "type": "string"
+                },
+                "title": {
+                    "description": "required",
+                    "type": "string"
+                },
+                "topic": {
+                    "description": "required",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/enums.StartUpTopic"
+                        }
+                    ]
+                }
+            }
+        },
         "responses.UserDetailsResponse": {
             "type": "object",
             "properties": {
@@ -522,8 +619,8 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "fundingGoal",
-                "idea",
                 "offeredPercent",
+                "status",
                 "title",
                 "topic"
             ],

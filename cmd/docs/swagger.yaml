@@ -69,6 +69,34 @@ definitions:
     - SPORT
     - TEACHING
     - CAR
+  requests.UpdateStartupRequest:
+    properties:
+      fundingGoal:
+        description: required
+        type: number
+      historyOfCreation:
+        type: string
+      idea:
+        type: string
+      offeredPercent:
+        description: required
+        type: number
+      stage:
+        $ref: '#/definitions/enums.StartUpStage'
+      status:
+        allOf:
+        - $ref: '#/definitions/enums.StartUpStatus'
+        description: required
+      strategy:
+        type: string
+      title:
+        description: required
+        type: string
+      topic:
+        allOf:
+        - $ref: '#/definitions/enums.StartUpTopic'
+        description: required
+    type: object
   responses.UserDetailsResponse:
     properties:
       balance:
@@ -143,8 +171,8 @@ definitions:
         type: integer
     required:
     - fundingGoal
-    - idea
     - offeredPercent
+    - status
     - title
     - topic
     type: object
@@ -389,6 +417,39 @@ paths:
       summary: getProfile
       tags:
       - Profile
+  /startup/{id}/update:
+    patch:
+      consumes:
+      - application/json
+      description: Обновление стартапа
+      parameters:
+      - description: ID стартапа
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Данные для создания стартапа
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/requests.UpdateStartupRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: update startup
+      tags:
+      - StartUp
   /startup/create:
     post:
       consumes:

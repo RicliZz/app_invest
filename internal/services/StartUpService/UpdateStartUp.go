@@ -4,9 +4,23 @@ import (
 	"github.com/RicliZz/app_invest/internal/models/requests"
 	"github.com/RicliZz/app_invest/pkg/Utils"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 )
 
+// @BasePath /api/v1
+
+// @Summary update startup
+// @Description Обновление стартапа
+// @Tags StartUp
+// @Accept  json
+// @Produce  json
+// @Param id path int true "ID стартапа"
+// @Param body body requests.UpdateStartupRequest true  "Данные для создания стартапа"
+// @Security BearerAuth
+// @Success 201 {string} string ""
+// @Failure 400 {string} string ""
+// @Router /startup/{id}/update [patch]
 func (s *StartUpService) UpdateStartUp(c *gin.Context) {
 	Id := Utils.GetIDFromContext(c)
 
@@ -16,6 +30,8 @@ func (s *StartUpService) UpdateStartUp(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	log.Println(Id)
 
 	updatedStartup, err := s.repoStartUp.GetStartUpById(Id)
 	if err != nil {
