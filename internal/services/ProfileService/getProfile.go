@@ -21,7 +21,7 @@ func NewProfileService(repUser repository.UserRepository, repDetails repository.
 // @BasePath /api/v1
 
 // @Summary getProfile
-// @Description Посмотреть профиль
+// @Description Посмотреть чужой профиль
 // @Tags Profile
 // @Accept  json
 // @Produce  json
@@ -48,7 +48,7 @@ func (s *ProfileService) GetProfile(c *gin.Context) {
 		return
 	}
 
-	userDetails, err := s.repoDetails.GetUserDetails(userId)
+	userDetails, err := s.repoDetails.GetUserDetails(pathUserId)
 	if err != nil {
 		log.Println("Failed to get user details:", err)
 		c.JSON(500, "Failed to retrieve user details")

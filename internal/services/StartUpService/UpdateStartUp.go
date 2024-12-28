@@ -16,7 +16,7 @@ import (
 // @Accept  json
 // @Produce  json
 // @Param id path int true "ID стартапа"
-// @Param body body requests.UpdateStartupRequest true  "Данные для создания стартапа"
+// @Param body body requests.UpdateStartupRequest true  "Данные для обновления стартапа"
 // @Security BearerAuth
 // @Success 201 {string} string ""
 // @Failure 400 {string} string ""

@@ -6,6 +6,18 @@ import (
 	"net/http"
 )
 
+// @BasePath /api/v1
+
+// @Summary getStartup
+// @Description Просмотреть стартап
+// @Tags StartUp
+// @Accept  json
+// @Produce  json
+// @Param id path int true "ID стартапа"
+// @Security BearerAuth
+// @Success 201 {string} string ""
+// @Failure 400 {string} string ""
+// @Router /startup/{id}/ [get]
 func (s *StartUpService) GetStartUp(c *gin.Context) {
 	startUpId, _ := Utils.GetUserFromContext(c)
 

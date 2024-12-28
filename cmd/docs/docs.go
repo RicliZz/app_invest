@@ -281,6 +281,128 @@ const docTemplate = `{
                 }
             }
         },
+        "/profile/delete": {
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Удалить профиль",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "deleteProfile",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID пользователя",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/profile/statistic": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Посмотреть свой профиль",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "getStatistic",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/responses.UserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Need int ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/profile/update": {
+            "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Обновить профиль",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "patchProfile",
+                "parameters": [
+                    {
+                        "description": "Данные для обновления профиля",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/requests.UpdateUserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/profile/{id}": {
             "get": {
                 "security": [
@@ -288,7 +410,7 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
-                "description": "Посмотреть профиль",
+                "description": "Посмотреть чужой профиль",
                 "consumes": [
                     "application/json"
                 ],
@@ -369,6 +491,126 @@ const docTemplate = `{
                 }
             }
         },
+        "/startup/search-all": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Просмотреть все стартапы",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "StartUp"
+                ],
+                "summary": "getAllStartups",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/startup/{id}/": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Просмотреть стартап",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "StartUp"
+                ],
+                "summary": "getStartup",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID стартапа",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/startup/{id}/delete": {
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Удаление стартапа",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "StartUp"
+                ],
+                "summary": "deleteStartup",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID стартапа",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/startup/{id}/update": {
             "patch": {
                 "security": [
@@ -396,7 +638,7 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "description": "Данные для создания стартапа",
+                        "description": "Данные для обновления стартапа",
                         "name": "body",
                         "in": "body",
                         "required": true,
@@ -561,6 +803,23 @@ const docTemplate = `{
                             "$ref": "#/definitions/enums.StartUpTopic"
                         }
                     ]
+                }
+            }
+        },
+        "requests.UpdateUserRequest": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "middle_name": {
+                    "type": "string"
                 }
             }
         },

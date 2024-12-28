@@ -7,6 +7,18 @@ import (
 	"net/http"
 )
 
+// @BasePath /api/v1
+
+// @Summary deleteStartup
+// @Description Удаление стартапа
+// @Tags StartUp
+// @Accept  json
+// @Produce  json
+// @Param id path int true "ID стартапа"
+// @Security BearerAuth
+// @Success 201 {string} string ""
+// @Failure 400 {string} string ""
+// @Router /startup/{id}/delete [delete]
 func (s *StartUpService) DeleteStartUp(c *gin.Context) {
 	startUpId, _ := Utils.GetUserFromContext(c)
 
