@@ -4,7 +4,6 @@ import (
 	"github.com/RicliZz/app_invest/internal/models/requests"
 	"github.com/RicliZz/app_invest/pkg/Utils"
 	"github.com/gin-gonic/gin"
-	"log"
 	"net/http"
 )
 
@@ -24,14 +23,12 @@ import (
 func (s *StartUpService) UpdateStartUp(c *gin.Context) {
 	Id := Utils.GetIDFromContext(c)
 
-	var payload requests.UpdateStartupRequest
+	var payload requests.StartupRequest
 
 	if err := c.ShouldBindJSON(&payload); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	log.Println(Id)
 
 	updatedStartup, err := s.repoStartUp.GetStartUpById(Id)
 	if err != nil {

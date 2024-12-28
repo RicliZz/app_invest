@@ -2,7 +2,7 @@ package requests
 
 import enums "github.com/RicliZz/app_invest/pkg"
 
-type UpdateStartupRequest struct {
+type StartupRequest struct {
 	Title             *string              `json:"title"` // required
 	Topic             *enums.StartUpTopic  `json:"topic"` // required
 	Idea              *string              `json:"idea"`
