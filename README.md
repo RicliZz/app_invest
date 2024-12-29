@@ -10,7 +10,7 @@
 
 ---
 ## migration create
-### `make new_migrate <migration_name>`
+### `make new-migrate name="migration_name"`
 
 ---
 ## migration up

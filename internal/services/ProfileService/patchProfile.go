@@ -7,6 +7,18 @@ import (
 	"net/http"
 )
 
+// @BasePath /api/v1
+
+// @Summary patchProfile
+// @Description Обновить профиль
+// @Tags Profile
+// @Accept  json
+// @Produce  json
+// @Param body body requests.UpdateUserRequest true  "Данные для обновления профиля"
+// @Success 200 {string} string ""
+// @Failure 400 {string} string ""
+// @Security BearerAuth
+// @Router /profile/update [patch]
 func (s *ProfileService) PatchProfile(c *gin.Context) {
 	userID, _ := Utils.GetUserFromContext(c)
 

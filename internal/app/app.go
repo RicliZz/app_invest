@@ -71,7 +71,7 @@ func Run(configpath string) {
 	infoServ := InfoService.NewInfoService()
 	authServ := authService.NewAuthService(authRepo, userRepo, userDetailsRepo, rdb)
 	profileServ := profileService.NewProfileService(userRepo, userDetailsRepo)
-	startUpServ := StartUpService.NewStartUpService(startUpRepo)
+	startUpServ := StartUpService.NewStartUpService(startUpRepo, userRepo, userDetailsRepo)
 	adminServ := AdminService.NewAdminService(adminRepo)
 
 	//HANDLERS

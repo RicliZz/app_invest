@@ -1,9 +1,6 @@
 package startUpModel
 
 import (
-	"database/sql/driver"
-	"encoding/json"
-	"errors"
 	"github.com/RicliZz/app_invest/pkg"
 	"time"
 )
@@ -15,10 +12,10 @@ type StartUp struct {
 	//Информация о стартапе
 	Title             string              `gorm:"column:title"             json:"title" validate:"required"`
 	Topic             enums.StartUpTopic  `gorm:"column:topic"             json:"topic" validate:"required"`
-	Idea              string              `gorm:"column:idea"              json:"idea" validate:"required"`
+	Idea              string              `gorm:"column:idea"              json:"idea"`
 	Strategy          string              `gorm:"column:strategy"          json:"strategy"`
 	HistoryOfCreation string              `gorm:"column:historyofcreation" json:"historyOfCreation"`
-	Status            enums.StartUpStatus `gorm:"column:status"            json:"status"`
+	Status            enums.StartUpStatus `gorm:"column:status"            json:"status" validate:"required"`
 	Stage             enums.StartUpStage  `gorm:"column:stage"             json:"stage"`
 	//цель по финансированию, сколько нужно собрать
 	FundingGoal float64 `gorm:"column:fundinggoal"       json:"fundingGoal" validate:"required"`
@@ -26,9 +23,9 @@ type StartUp struct {
 	OfferedPercent float64 `gorm:"column:offeredpercent"    json:"offeredPercent" validate:"required"`
 
 	//Информация о создателе
-	FounderFullName string         `gorm:"column:founderfullname" json:"founderFullName"`
-	FounderEmail    string         `gorm:"column:founderemail"    json:"founderEmail"`
-	FounderSocials  FounderSocials `gorm:"column:foundersocials;type:jsonb"  json:"founderSocials"`
+	FounderFullName string         `gorm:"-" json:"founderFullName"`
+	FounderEmail    string         `gorm:"-" json:"founderEmail"`
+	FounderSocials  FounderSocials `gorm:"-" json:"founderSocials"`
 
 	//Информация о дате создания и апдейта
 	CreatedAt time.Time `gorm:"column:createdat" json:"createdAt"`
@@ -41,18 +38,6 @@ type FounderSocials struct {
 	TelegramLink  string `gorm:"column:telegramlink"  json:"telegramLink"`
 	WhatsUpLink   string `gorm:"column:whatsuplink"   json:"whatsUpLink"`
 	InstagramLink string `gorm:"column:instagramlink" json:"instagramLink"`
-}
-
-func (f FounderSocials) Value() (driver.Value, error) {
-	return json.Marshal(f)
-}
-
-func (f *FounderSocials) Scan(value interface{}) error {
-	bytes, ok := value.([]byte)
-	if !ok {
-		return errors.New("failed to scan FounderSocials")
-	}
-	return json.Unmarshal(bytes, f)
 }
 
 func (StartUp) TableName() string {

@@ -1,3 +1,4 @@
 .env
 .idea
 Makefile
+bin/invest_app

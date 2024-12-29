@@ -1,5 +1,7 @@
 package responses
 
+import "github.com/RicliZz/app_invest/internal/models/userModel"
+
 type UserResponse struct {
 	FirstName           string `json:"firstName"`
 	LastName            string `json:"lastName"`
@@ -10,5 +12,6 @@ type UserResponse struct {
 }
 
 type UserDetailsResponse struct {
-	Balance float64 `json:"balance"`
+	Balance float64           `json:"balance"`
+	Socials userModel.Socials `json:"socials"`
 }

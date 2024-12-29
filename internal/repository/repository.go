@@ -28,7 +28,7 @@ type StartUpRepository interface {
 	Create(payload startUpModel.StartUp) error
 	IsTitleExists(title string) bool
 	Delete(startUpId int64) error
-	Update(startUpId int64, payload startUpModel.StartUp) error
+	Update(payload startUpModel.StartUp) error
 	GetStartUpById(startUpId int64) (*startUpModel.StartUp, error)
 	GetAllStartUps() ([]startUpModel.StartUp, error) //в дальнейшем добавить на вход фильтр и пагинацию
 }

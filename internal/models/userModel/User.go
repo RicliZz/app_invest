@@ -1,6 +1,8 @@
 package userModel
 
-import startUpModel "github.com/RicliZz/app_invest/internal/models/StartUp"
+import (
+	startUpModel "github.com/RicliZz/app_invest/internal/models/StartUp"
+)
 
 type User struct {
 	ID           int                    `gorm:"primaryKey;autoIncrement" json:"id"`

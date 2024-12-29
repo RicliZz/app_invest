@@ -19,9 +19,8 @@ func (h *StartUpHandler) RegisterRoutes(router *gin.RouterGroup) {
 	startUpRouter.Use(Utils.AuthMiddleware())
 	{
 		suIDRouter := startUpRouter.Group("/:id")
+		suIDRouter.Use(Utils.ValidateAndExtractIDMiddleware())
 		{
-			suIDRouter.Use(Utils.ValidateAndExtractIDMiddleware())
-
 			suIDRouter.GET("/", h.service.GetStartUp)
 
 			suIDRouter.PATCH("/update", h.service.UpdateStartUp)

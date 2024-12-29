@@ -15,7 +15,7 @@ func ValidateAndExtractIDMiddleware() gin.HandlerFunc {
 			c.Abort() // Прерываем запрос
 			return
 		}
-		c.Set("userID", int64(id)) // Сохраняем ID в контексте
-		c.Next()                   // Продолжаем выполнение следующего middleware или хендлера
+		c.Set("ID", int64(id)) // Сохраняем ID в контексте
+		c.Next()               // Продолжаем выполнение следующего middleware или хендлера
 	}
 }
