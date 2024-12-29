@@ -1,0 +1,1 @@
+ALTER TABLE user_details ADD COLUMN IF NOT EXISTS "socials" jsonb default null;

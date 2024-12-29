@@ -11,14 +11,16 @@ import (
 )
 
 type StartUpService struct {
-	repoStartUp repository.StartUpRepository
-	repoUser    repository.UserRepository
+	repoStartUp     repository.StartUpRepository
+	repoUser        repository.UserRepository
+	repoUserDetails repository.UserDetailsRepository
 }
 
-func NewStartUpService(repoStartUp repository.StartUpRepository, repoUser repository.UserRepository) *StartUpService {
+func NewStartUpService(repoStartUp repository.StartUpRepository, repoUser repository.UserRepository, repoUserDetails repository.UserDetailsRepository) *StartUpService {
 	return &StartUpService{
-		repoStartUp: repoStartUp,
-		repoUser:    repoUser,
+		repoStartUp:     repoStartUp,
+		repoUser:        repoUser,
+		repoUserDetails: repoUserDetails,
 	}
 }
 
@@ -50,7 +52,6 @@ func (s *StartUpService) CreateStartUp(c *gin.Context) {
 		return
 	} else {
 		userId, _ := Utils.GetUserFromContext(c)
-		user, _ := s.repoUser.GetUserById(userId)
 
 		startup := startUpModel.StartUp{
 			UserID:            int(userId),
@@ -62,8 +63,7 @@ func (s *StartUpService) CreateStartUp(c *gin.Context) {
 			Status:            *payload.Status,
 			Stage:             *payload.Stage,
 			FundingGoal:       *payload.FundingGoal,
-			OfferedPercent:    *payload.OfferedPercent,
-			FounderSocials:    startUpModel.FounderSocials(user.Socials)}
+			OfferedPercent:    *payload.OfferedPercent}
 
 		err := s.repoStartUp.Create(startup)
 		if err != nil {

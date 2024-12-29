@@ -73,6 +73,7 @@ func (s *ProfileService) GetProfile(c *gin.Context) {
 			Email:      user.Email,
 			UserDetailsResponse: responses.UserDetailsResponse{
 				Balance: userDetails.Balance,
+				Socials: userDetails.Socials,
 			},
 		})
 		return

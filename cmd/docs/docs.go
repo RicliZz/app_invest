@@ -782,7 +782,12 @@ const docTemplate = `{
                     "$ref": "#/definitions/enums.StartUpStage"
                 },
                 "status": {
-                    "$ref": "#/definitions/enums.StartUpStatus"
+                    "description": "required",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/enums.StartUpStatus"
+                        }
+                    ]
                 },
                 "strategy": {
                     "type": "string"
@@ -792,7 +797,12 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "topic": {
-                    "$ref": "#/definitions/enums.StartUpTopic"
+                    "description": "required",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/enums.StartUpTopic"
+                        }
+                    ]
                 }
             }
         },
@@ -818,6 +828,9 @@ const docTemplate = `{
             "properties": {
                 "balance": {
                     "type": "number"
+                },
+                "socials": {
+                    "$ref": "#/definitions/userModel.Socials"
                 }
             }
         },
@@ -929,7 +942,7 @@ const docTemplate = `{
                 }
             }
         },
-        "userModel.FounderSocials": {
+        "userModel.Socials": {
             "type": "object",
             "properties": {
                 "instagramLink": {
@@ -982,9 +995,6 @@ const docTemplate = `{
                 "role": {
                     "type": "string"
                 },
-                "socials": {
-                    "$ref": "#/definitions/userModel.FounderSocials"
-                },
                 "startUps": {
                     "type": "array",
                     "items": {
@@ -1004,6 +1014,9 @@ const docTemplate = `{
                 },
                 "id": {
                     "type": "integer"
+                },
+                "socials": {
+                    "$ref": "#/definitions/userModel.Socials"
                 },
                 "userId": {
                     "type": "integer"

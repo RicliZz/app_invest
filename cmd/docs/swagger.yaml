@@ -84,14 +84,18 @@ definitions:
       stage:
         $ref: '#/definitions/enums.StartUpStage'
       status:
-        $ref: '#/definitions/enums.StartUpStatus'
+        allOf:
+        - $ref: '#/definitions/enums.StartUpStatus'
+        description: required
       strategy:
         type: string
       title:
         description: required
         type: string
       topic:
-        $ref: '#/definitions/enums.StartUpTopic'
+        allOf:
+        - $ref: '#/definitions/enums.StartUpTopic'
+        description: required
     type: object
   requests.UpdateUserRequest:
     properties:
@@ -108,6 +112,8 @@ definitions:
     properties:
       balance:
         type: number
+      socials:
+        $ref: '#/definitions/userModel.Socials'
     type: object
   responses.UserResponse:
     properties:
@@ -183,7 +189,7 @@ definitions:
     - title
     - topic
     type: object
-  userModel.FounderSocials:
+  userModel.Socials:
     properties:
       instagramLink:
         type: string
@@ -218,8 +224,6 @@ definitions:
         type: string
       role:
         type: string
-      socials:
-        $ref: '#/definitions/userModel.FounderSocials'
       startUps:
         items:
           $ref: '#/definitions/startUpModel.StartUp'
@@ -233,6 +237,8 @@ definitions:
         type: number
       id:
         type: integer
+      socials:
+        $ref: '#/definitions/userModel.Socials'
       userId:
         type: integer
     type: object

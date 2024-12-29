@@ -774,7 +774,12 @@
                     "$ref": "#/definitions/enums.StartUpStage"
                 },
                 "status": {
-                    "$ref": "#/definitions/enums.StartUpStatus"
+                    "description": "required",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/enums.StartUpStatus"
+                        }
+                    ]
                 },
                 "strategy": {
                     "type": "string"
@@ -784,7 +789,12 @@
                     "type": "string"
                 },
                 "topic": {
-                    "$ref": "#/definitions/enums.StartUpTopic"
+                    "description": "required",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/enums.StartUpTopic"
+                        }
+                    ]
                 }
             }
         },
@@ -810,6 +820,9 @@
             "properties": {
                 "balance": {
                     "type": "number"
+                },
+                "socials": {
+                    "$ref": "#/definitions/userModel.Socials"
                 }
             }
         },
@@ -921,7 +934,7 @@
                 }
             }
         },
-        "userModel.FounderSocials": {
+        "userModel.Socials": {
             "type": "object",
             "properties": {
                 "instagramLink": {
@@ -974,9 +987,6 @@
                 "role": {
                     "type": "string"
                 },
-                "socials": {
-                    "$ref": "#/definitions/userModel.FounderSocials"
-                },
                 "startUps": {
                     "type": "array",
                     "items": {
@@ -996,6 +1006,9 @@
                 },
                 "id": {
                     "type": "integer"
+                },
+                "socials": {
+                    "$ref": "#/definitions/userModel.Socials"
                 },
                 "userId": {
                     "type": "integer"

@@ -44,6 +44,7 @@ func (s *ProfileService) GetStatistic(c *gin.Context) {
 			Email:      user.Email,
 			UserDetailsResponse: responses.UserDetailsResponse{
 				Balance: userDetails.Balance,
+				Socials: userDetails.Socials,
 			},
 		})
 		return
