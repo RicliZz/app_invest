@@ -3,6 +3,7 @@ package repository
 import (
 	startUpModel "github.com/RicliZz/app_invest/internal/models/StartUp"
 	"github.com/RicliZz/app_invest/internal/models/authModel"
+	"github.com/RicliZz/app_invest/internal/models/requests"
 	"github.com/RicliZz/app_invest/internal/models/userModel"
 )
 
@@ -17,6 +18,7 @@ type UserRepository interface {
 	SaveUpdates(user userModel.User) error
 	DeleteUser(userID int64) error
 	GetUsersByOpt(opt *string) (*[]userModel.User, error)
+	UpdateUserAndDetailsTransaction(userID int64, updates requests.PatchProfileRequest) error
 }
 
 type UserDetailsRepository interface {

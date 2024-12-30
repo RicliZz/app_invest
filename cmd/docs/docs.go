@@ -383,7 +383,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/requests.UpdateUserRequest"
+                            "$ref": "#/definitions/requests.PatchProfileRequest"
                         }
                     }
                 ],
@@ -761,6 +761,17 @@ const docTemplate = `{
                 "CAR"
             ]
         },
+        "requests.PatchProfileRequest": {
+            "type": "object",
+            "properties": {
+                "user": {
+                    "$ref": "#/definitions/requests.UpdateUserRequest"
+                },
+                "user_details": {
+                    "$ref": "#/definitions/requests.UpdateUserDetailsRequest"
+                }
+            }
+        },
         "requests.StartupRequest": {
             "type": "object",
             "properties": {
@@ -806,19 +817,27 @@ const docTemplate = `{
                 }
             }
         },
+        "requests.UpdateUserDetailsRequest": {
+            "type": "object",
+            "properties": {
+                "balance": {
+                    "type": "number"
+                }
+            }
+        },
         "requests.UpdateUserRequest": {
             "type": "object",
             "properties": {
                 "email": {
                     "type": "string"
                 },
-                "first_name": {
+                "firstName": {
                     "type": "string"
                 },
-                "last_name": {
+                "lastName": {
                     "type": "string"
                 },
-                "middle_name": {
+                "middleName": {
                     "type": "string"
                 }
             }

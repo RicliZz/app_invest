@@ -26,7 +26,7 @@ func (rep *UserRepositoryImpl) IsEmailExists(email string) bool {
 func (rep *UserRepositoryImpl) GetUserById(id int64) (*userModel.User, error) {
 	var user userModel.User
 
-	result := rep.db.First(&user, "id = ?", id)
+	result := rep.db.Preload("UserDetails").First(&user, "id = ?", id)
 
 	if result.Error != nil {
 		log.Println("Error with find user")

@@ -69,6 +69,13 @@ definitions:
     - SPORT
     - TEACHING
     - CAR
+  requests.PatchProfileRequest:
+    properties:
+      user:
+        $ref: '#/definitions/requests.UpdateUserRequest'
+      user_details:
+        $ref: '#/definitions/requests.UpdateUserDetailsRequest'
+    type: object
   requests.StartupRequest:
     properties:
       fundingGoal:
@@ -97,15 +104,20 @@ definitions:
         - $ref: '#/definitions/enums.StartUpTopic'
         description: required
     type: object
+  requests.UpdateUserDetailsRequest:
+    properties:
+      balance:
+        type: number
+    type: object
   requests.UpdateUserRequest:
     properties:
       email:
         type: string
-      first_name:
+      firstName:
         type: string
-      last_name:
+      lastName:
         type: string
-      middle_name:
+      middleName:
         type: string
     type: object
   responses.UserDetailsResponse:
@@ -504,7 +516,7 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/requests.UpdateUserRequest'
+          $ref: '#/definitions/requests.PatchProfileRequest'
       produces:
       - application/json
       responses:
