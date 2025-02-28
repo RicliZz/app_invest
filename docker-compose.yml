@@ -63,22 +63,22 @@ services:
     networks:
       - dev
 
-  elasticsearch:
-    mem_limit: 4g
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.16.1
-    container_name: elasticsearch
-    environment:
-      - discovery.type=single-node
-      - xpack.security.enabled=true
-      - ES_JAVA_OPTS=-Xms2g -Xmx2g
-    ports:
-      - "9200:9200"
-    volumes:
-      - es_data:/var/lib/elasticsearch/data
-    networks:
-      - dev
+#  elasticsearch:
+#    mem_limit: 4g
+#    image: docker.elastic.co/elasticsearch/elasticsearch:8.16.1
+#    container_name: elasticsearch
+#    environment:
+#      - discovery.type=single-node
+#      - xpack.security.enabled=true
+#      - ES_JAVA_OPTS=-Xms2g -Xmx2g
+#    ports:
+#      - "9200:9200"
+#    volumes:
+#      - es_data:/var/lib/elasticsearch/data
+#    networks:
+#      - dev
 
 volumes:
-  postgres_data:
-  redis_data:
-  es_data:
+   postgres_data:
+   redis_data:
+#  es_data:

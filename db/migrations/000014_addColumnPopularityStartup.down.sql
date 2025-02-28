@@ -1,0 +1,1 @@
+ALTER TABLE startup DROP COLUMN IF EXISTS popularity;

@@ -2,8 +2,8 @@ package app
 
 import (
 	"fmt"
-	docs "github.com/RicliZz/app_invest/cmd/docs"
 	"github.com/RicliZz/app_invest/config"
+	docs "github.com/RicliZz/app_invest/docs"
 	"github.com/RicliZz/app_invest/internal/handlers/adminHandler"
 	"github.com/RicliZz/app_invest/internal/handlers/authHandler"
 	"github.com/RicliZz/app_invest/internal/handlers/infoHandler"

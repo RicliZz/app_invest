@@ -1,9 +1,14 @@
 name: testWorkflow
-on: [workflow_dispatch]
+on:
+  push:
+    branches:
+      - main
 jobs:
   first:
     runs-on: ubuntu-latest
     steps:
-      - name: Print to console
-        run: echo test Workflow
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Tests
+        run: go test
       

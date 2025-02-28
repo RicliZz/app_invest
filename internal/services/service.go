@@ -23,6 +23,7 @@ type StartUpServiceInterface interface {
 	UpdateStartUp(ctx *gin.Context)
 	GetStartUp(ctx *gin.Context)
 	GetAllStartUps(ctx *gin.Context)
+	GetMostPopularStartUps(ctx *gin.Context)
 }
 
 type InfoServiceInterface interface {

@@ -32,6 +32,7 @@ type StartUpRepository interface {
 	Delete(startUpId int64) error
 	Update(payload startUpModel.StartUp) error
 	GetStartUpById(startUpId int64) (*startUpModel.StartUp, error)
+	GetStartUpsByPopularity() ([]startUpModel.StartUp, error)
 	GetAllStartUps() ([]startUpModel.StartUp, error) //в дальнейшем добавить на вход фильтр и пагинацию
 }
 

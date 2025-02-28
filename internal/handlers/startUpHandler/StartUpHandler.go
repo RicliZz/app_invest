@@ -32,5 +32,7 @@ func (h *StartUpHandler) RegisterRoutes(router *gin.RouterGroup) {
 		startUpRouter.GET("/search-all", h.service.GetAllStartUps)
 
 		startUpRouter.POST("/create", h.service.CreateStartUp)
+
+		startUpRouter.GET("/most-popular", h.service.GetMostPopularStartUps)
 	}
 }
