@@ -48,7 +48,7 @@ func (s *StartUpService) CreateStartUp(c *gin.Context) {
 	}
 
 	if s.repoStartUp.IsTitleExists(*payload.Title) {
-		res := fmt.Sprintf("title with name %s already exists", payload.Title)
+		res := fmt.Sprintf("title with name %s already exists", *payload.Title)
 		c.JSON(http.StatusBadRequest, gin.H{"error": res})
 		return
 	} else {
