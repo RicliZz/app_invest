@@ -78,7 +78,7 @@ services:
       - ./db/migrations:/docker-entrypoint-initdb.d
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD", "pg_isready -U ${DB_USERNAME} -d ${DB_NAME}"]
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "invest_db"]
       interval: 10s
       timeout: 5s
       retries: 3
