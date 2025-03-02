@@ -6,7 +6,9 @@ services:
   invest_app:
     build:
       context: .
+    image: invest_app_image
     container_name: invest_app
+    command: ["sh", "-c", "go run /usr/src/app/cmd/app/main.go"]
     depends_on:
       - postgres
     environment:
@@ -80,7 +82,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
-      start_period: 10s
+      start_period: 1m
     restart: unless-stopped
     networks:
       - dev

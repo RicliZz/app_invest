@@ -21,5 +21,9 @@ func (h *AuthHandler) RegisterRoutes(router *gin.RouterGroup) {
 		authRouter.POST("/sign-in", h.service.SignIn)
 
 		authRouter.GET("/verify/:emailToken", h.service.VerifyToken)
+
+		authRouter.GET("/ping", func(c *gin.Context) {
+			c.String(200, "pong")
+		})
 	}
 }

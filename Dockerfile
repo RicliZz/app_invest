@@ -7,7 +7,7 @@ RUN go mod download && go mod verify
 
 COPY . .
 
-RUN go build -v -o /usr/src/app/bin/invest_app ./cmd/app
+RUN go build -v -o bin/invest_app ./cmd/app
 
-RUN ls -l /usr/src/app/bin/
-RUN chmod +x /usr/src/app/bin/invest_app
+RUN ls -l bin/
+RUN chmod +x bin/invest_app

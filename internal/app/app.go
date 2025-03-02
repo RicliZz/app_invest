@@ -54,7 +54,7 @@ func Run(configpath string) {
 
 	//redis
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     "92.246.141.141:6379",
+		Addr:     "92.246.141.141",
 		Password: "ricliznedokyrill",
 		DB:       0,
 	})
