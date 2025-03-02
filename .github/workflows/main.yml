@@ -10,5 +10,5 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Tests
-        run: go test
+        run: go test -v ./...
       
