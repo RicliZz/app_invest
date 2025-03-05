@@ -7,6 +7,7 @@ import (
 	"github.com/RicliZz/app_invest/internal/repository"
 	"github.com/RicliZz/app_invest/pkg/Utils"
 	"github.com/gin-gonic/gin"
+	"github.com/redis/go-redis/v9"
 	"net/http"
 )
 
@@ -14,13 +15,16 @@ type StartUpService struct {
 	repoStartUp     repository.StartUpRepository
 	repoUser        repository.UserRepository
 	repoUserDetails repository.UserDetailsRepository
+	redisClient     *redis.Client
 }
 
-func NewStartUpService(repoStartUp repository.StartUpRepository, repoUser repository.UserRepository, repoUserDetails repository.UserDetailsRepository) *StartUpService {
+func NewStartUpService(repoStartUp repository.StartUpRepository, repoUser repository.UserRepository,
+	repoUserDetails repository.UserDetailsRepository, redisClient *redis.Client) *StartUpService {
 	return &StartUpService{
 		repoStartUp:     repoStartUp,
 		repoUser:        repoUser,
 		repoUserDetails: repoUserDetails,
+		redisClient:     redisClient,
 	}
 }
 

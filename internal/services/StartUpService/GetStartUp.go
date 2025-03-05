@@ -1,9 +1,11 @@
 package StartUpService
 
 import (
+	"context"
 	startUpModel "github.com/RicliZz/app_invest/internal/models/StartUp"
 	"github.com/RicliZz/app_invest/pkg/Utils"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 )
 
@@ -21,6 +23,12 @@ import (
 // @Router /startup/{id}/ [get]
 func (s *StartUpService) GetStartUp(c *gin.Context) {
 	startUpId := Utils.GetIDFromContext(c)
+
+	err := s.redisClient.Incr(context.Background(), "id").Err()
+	if err != nil {
+		log.Println("Failed incr visit startUp with id = ", startUpId)
+	}
+	
 	userId, _ := Utils.GetUserFromContext(c)
 
 	startUp, err := s.repoStartUp.GetStartUpById(startUpId)

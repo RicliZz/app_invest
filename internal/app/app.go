@@ -54,8 +54,8 @@ func Run(configpath string) {
 
 	//redis
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     "92.246.141.141",
-		Password: "ricliznedokyrill",
+		Addr:     "92.246.141.141:6379",
+		Password: os.Getenv("REDIS_PASSWORD"),
 		DB:       0,
 	})
 	log.Println("Successfully connected to the redis server")
@@ -71,7 +71,7 @@ func Run(configpath string) {
 	infoServ := InfoService.NewInfoService()
 	authServ := authService.NewAuthService(authRepo, userRepo, userDetailsRepo, rdb)
 	profileServ := profileService.NewProfileService(userRepo, userDetailsRepo)
-	startUpServ := StartUpService.NewStartUpService(startUpRepo, userRepo, userDetailsRepo)
+	startUpServ := StartUpService.NewStartUpService(startUpRepo, userRepo, userDetailsRepo, rdb)
 	adminServ := AdminService.NewAdminService(adminRepo)
 
 	//HANDLERS
