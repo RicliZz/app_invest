@@ -55,7 +55,7 @@ func Run(configpath string) {
 	//redis
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     "92.246.141.141:6379",
-		Password: os.Getenv("REDIS_PASSWORD"),
+		Password: os.Getenv("REDIS_DB_PASSWORD"),
 		DB:       0,
 	})
 	log.Println("Successfully connected to the redis server")
