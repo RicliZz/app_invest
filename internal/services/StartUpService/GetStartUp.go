@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 // @BasePath /api/v1
@@ -24,11 +25,11 @@ import (
 func (s *StartUpService) GetStartUp(c *gin.Context) {
 	startUpId := Utils.GetIDFromContext(c)
 
-	err := s.redisClient.Incr(context.Background(), "id").Err()
+	err := s.redisClient.Incr(context.Background(), strconv.FormatInt(startUpId, 10)).Err()
 	if err != nil {
 		log.Println("Failed incr visit startUp with id = ", startUpId)
 	}
-	
+
 	userId, _ := Utils.GetUserFromContext(c)
 
 	startUp, err := s.repoStartUp.GetStartUpById(startUpId)
